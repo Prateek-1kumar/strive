@@ -8,12 +8,11 @@ export function Professional() {
   const [t, setT] = useState(0);
 
   useEffect(() => {
-    if (location.hash.startsWith("#t=")) return setT(+location.hash.slice(3)); // TEMPDEBUG
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return setT(DURATION);
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches; // reduced motion: straight to the summit
     let raf = 0, start = 0;
     const tick = (now: number) => {
       start ||= now;
-      const s = Math.min(DURATION, Math.max(0, (now - start) / 1000 - 0.6)); // brief beat on step two first
+      const s = still ? DURATION : Math.min(DURATION, Math.max(0, (now - start) / 1000 - 0.6)); // brief beat on step two first
       setT(s);
       if (s < DURATION) raf = requestAnimationFrame(tick);
     };

@@ -8,12 +8,11 @@ export function Hero() {
       </div>
       <div className="relative z-10 mx-auto flex min-h-svh max-w-6xl flex-col justify-center px-6 pb-20 pt-36">
         <div className="max-w-xl">
-          <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] uppercase tracking-[0.08em]">Strive</h1>
-          <p className="mt-5 font-serif text-[clamp(1.75rem,3vw,2.5rem)] leading-tight text-gold">Build your future.</p>
+          <h1 className="text-[clamp(2.75rem,5.5vw,4.5rem)] leading-[1.05] text-gold">Build your future with Strive.</h1>
           <p className="mt-8 max-w-md text-lg text-offwhite/75">
             Career clarity, professional growth and career psychology — designed for every stage of your working life.
           </p>
-          <a href="#idea" className="mt-10 inline-block bg-gold px-7 py-3.5 text-sm font-medium text-navy">
+          <a href="#idea" className="mt-10 inline-block rounded-sm bg-gold px-7 py-3.5 text-sm font-medium text-navy">
             Explore Strive
           </a>
         </div>

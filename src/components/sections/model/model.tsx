@@ -13,7 +13,7 @@ function Photos({ slug, label }: { slug: string; label: string }) {
       {[1, 2, 3, 4].map((n) => {
         const file = `${slug}-${n}.jpg`;
         return exists(file) ? (
-          <Image key={n} src={`/stages/${file}`} alt={label} width={800} height={600} className={`${frame} grayscale-[.8] shadow-[0_16px_40px_-18px_rgba(6,37,74,.35)]`} />
+          <Image key={n} src={`/stages/${file}`} alt={label} width={800} height={600} className={`${frame} grayscale`} />
         ) : (
           // ponytail: placeholder until the photo exists, no fs polling or fallback chain
           <div key={n} className={`${frame} bg-beige/70`} />

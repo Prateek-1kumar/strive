@@ -19,13 +19,13 @@ export function Currently() {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {cards.map((c, i) => (
             <article key={c.id} id={c.id} className="group flex flex-col border border-navy/10 bg-white">
-              <div className={`relative aspect-[16/10] overflow-hidden ${c.tint}`}>
+              <div className={`relative aspect-[16/10] overflow-hidden bg-beige/40`}>
                 <Image
                   src={`/cards/${c.id}.jpg`}
                   alt=""
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover mix-blend-multiply grayscale transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
                 />
                 <span className="absolute left-4 top-4 bg-white px-2.5 py-1.5 text-sm tabular-nums text-navy">
                   {String(i + 1).padStart(2, "0")}

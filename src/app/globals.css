@@ -28,3 +28,17 @@ h1, h2, h3 {
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
+
+/* Scroll-linked parallax for hero art layers (static where unsupported or reduced motion) */
+@keyframes px {
+  to { transform: translateY(var(--px)); }
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .px {
+      animation: px linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
+}

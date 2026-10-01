@@ -1,9 +1,7 @@
 import { Professional } from "@/components/illustrations/professional";
+import { STEPS, W, X0, RISE, BASE, DX, DY, FLOOR } from "@/components/illustrations/climb";
 
-// Flat-editorial stairway with a luminous glow above. Layers (.px) drift at different speeds on scroll — see globals.css.
-const STEPS = 7;
-const W = 80, X0 = 330, RISE = 62, BASE = 780, DX = 38, DY = 22, FLOOR = 960;
-const PRO_STEP = 4; // step the professional stands on
+// Flat-editorial stairway lit from above. Layers (.px) drift at different speeds on scroll — see globals.css.
 
 const lerp = (a: string, b: string, t: number) => {
   const c = (h: string, i: number) => parseInt(h.slice(1 + i * 2, 3 + i * 2), 16);
@@ -43,15 +41,24 @@ export default function HeroArt() {
   return (
     <svg viewBox="0 0 1000 900" preserveAspectRatio="xMaxYMax slice" className="h-full w-full" aria-hidden="true">
       <defs>
-        <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-          <stop offset="0" stopColor="#F4E2AE" stopOpacity=".55" />
-          <stop offset=".35" stopColor="#E3C06E" stopOpacity=".24" />
+        <radialGradient id="bloom">
+          <stop offset="0" stopColor="#FFF0C8" stopOpacity=".42" />
+          <stop offset=".3" stopColor="#F0D48A" stopOpacity=".16" />
+          <stop offset=".65" stopColor="#C9A24A" stopOpacity=".05" />
           <stop offset="1" stopColor="#C9A24A" stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="shaft" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#F1DC9C" stopOpacity=".2" />
-          <stop offset="1" stopColor="#F1DC9C" stopOpacity="0" />
+        <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#F6E3AE" stopOpacity=".34" />
+          <stop offset=".75" stopColor="#F6E3AE" stopOpacity=".1" />
+          <stop offset="1" stopColor="#F6E3AE" stopOpacity="0" />
         </linearGradient>
+        <radialGradient id="pool">
+          <stop offset="0" stopColor="#FFF3D6" stopOpacity=".5" />
+          <stop offset="1" stopColor="#FFF3D6" stopOpacity="0" />
+        </radialGradient>
+        <filter id="soft" x="-50%" y="-10%" width="200%" height="120%">
+          <feGaussianBlur stdDeviation="16" />
+        </filter>
         <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#0a2f5c" />
           <stop offset="1" stopColor="#06254A" />
@@ -66,21 +73,23 @@ export default function HeroArt() {
         ))}
       </g>
 
-      {/* mid: luminous glow at the top, light falling toward the summit */}
-      <g className="px" style={px(190)}>
-        <polygon points="820,60 960,60 1040,440 740,440" fill="url(#shaft)" />
-        <ellipse cx="890" cy="150" rx="440" ry="320" fill="url(#halo)" />
-        <ellipse cx="890" cy="140" rx="190" ry="130" fill="url(#halo)" />
+      {/* mid: soft light falling from above onto the summit (screen-blended so it brightens, never greys) */}
+      <g className="px" style={{ ...px(190), mixBlendMode: "screen" }}>
+        <ellipse cx="885" cy="10" rx="430" ry="300" fill="url(#bloom)" />
+        <g filter="url(#soft)">
+          <polygon points="825,-40 935,-40 1070,520 700,520" fill="url(#beam)" opacity=".35" />
+          <polygon points="858,-40 908,-40 968,410 772,410" fill="url(#beam)" />
+        </g>
       </g>
 
       {/* near: stairway + professional */}
       <g className="px" style={px(300)}>
         {steps}
-        <Professional
-          x={X0 + W * PRO_STEP + W / 2 + DX / 2}
-          y={BASE - RISE * PRO_STEP - DY / 2}
-          scale={1.35}
+        <ellipse
+          cx={X0 + W * (STEPS - 1) + W / 2 + DX / 2} cy={BASE - RISE * (STEPS - 1) - DY / 2}
+          rx="58" ry="13" fill="url(#pool)" style={{ mixBlendMode: "screen" }}
         />
+        <Professional />
       </g>
     </svg>
   );

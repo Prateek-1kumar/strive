@@ -87,7 +87,7 @@ export default function HeroArt() {
         {steps}
         <ellipse
           cx={X0 + W * (STEPS - 1) + W / 2 + DX / 2} cy={BASE - RISE * (STEPS - 1) - DY / 2}
-          rx="58" ry="13" fill="url(#pool)" style={{ mixBlendMode: "screen" }}
+          rx="50" ry="11" fill="url(#pool)" style={{ mixBlendMode: "screen" }}
         />
         <Professional />
       </g>

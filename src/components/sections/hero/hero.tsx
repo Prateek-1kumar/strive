@@ -17,9 +17,6 @@ export function Hero() {
             Explore Strive
           </a>
         </div>
-        <p className="absolute bottom-10 left-6 flex items-center gap-3 text-xs uppercase tracking-[0.14em] text-offwhite/60">
-          <span className="h-px w-8 bg-gold" /> Starting with Psychology &amp; Research
-        </p>
       </div>
     </section>
   );

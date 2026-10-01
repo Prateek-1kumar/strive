@@ -42,3 +42,8 @@ h1, h2, h3 {
     }
   }
 }
+
+/* Anchored sections clear the pinned header */
+section[id] {
+  scroll-margin-top: 4rem;
+}

@@ -1,41 +1,9 @@
 import Image from "next/image";
-
-// Launch verticals. Add a profession by appending an entry — the layout scales to any count.
-const cards = [
-  {
-    id: "psychology",
-    title: "Psychology",
-    text: "Career paths, opportunities and professional growth.",
-    tags: ["Career paths", "Opportunities", "Growth"],
-    tagline: "Where psychology meets work",
-    cta: "Explore psychology",
-    tint: "bg-[#8ea3bf]",
-  },
-  {
-    id: "research",
-    title: "Research",
-    text: "Academia, research careers and building a research profile.",
-    tags: ["Academia", "Research careers", "Research profile"],
-    tagline: "Built on evidence",
-    cta: "Explore research",
-    tint: "bg-beige",
-  },
-  {
-    id: "growth",
-    title: "Professional Growth",
-    text: "Skills, visibility and career development.",
-    tags: ["Skills", "Visibility", "Development"],
-    tagline: "Grow on purpose",
-    cta: "Explore growth",
-    tint: "bg-[#dcc58a]",
-  },
-];
-
-
+import { cards } from "./cards";
 
 export function Currently() {
   return (
-    <section id="currently" className="relative z-10 bg-offwhite py-20 lg:py-28">
+    <section id="currently" className="bg-offwhite py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-tight text-navy">Currently at Strive</h2>

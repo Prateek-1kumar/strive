@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Newsreader } from "next/font/google";
+import { Bodoni_Moda, Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,10 +8,10 @@ const inter = Inter({
   weight: ["400", "500"],
 });
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const bodoniModa = Bodoni_Moda({
+  variable: "--font-bodoni",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${inter.variable} ${bodoniModa.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

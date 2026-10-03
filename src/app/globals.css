@@ -6,7 +6,7 @@
   --color-beige: #d8cbb5;
   --color-offwhite: #f8f6f1;
   --color-charcoal: #252525;
-  --font-serif: var(--font-newsreader);
+  --font-serif: var(--font-bodoni);
   --font-sans: var(--font-inter);
 }
 
@@ -23,7 +23,7 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-serif), Didot, "Bodoni MT", Georgia, serif;
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;

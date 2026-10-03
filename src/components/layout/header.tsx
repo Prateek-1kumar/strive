@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Logo } from "./logo";
 import { stages } from "@/components/sections/model/stages";
 import { cards } from "@/components/sections/currently/cards";
+import { MainCTA } from "@/components/ui/main-cta";
 
 type DropdownId = "model" | "currently";
 
@@ -62,13 +63,15 @@ export function Header() {
       className="sticky top-0 z-50 w-full bg-white transition-shadow duration-200"
     >
       <div className="mx-auto flex h-14 w-full max-w-[1800px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Logo */}
-        <a href="#hero" onClick={closeAll} className="flex items-center" aria-label="Strive home">
-          <Logo dark={true} />
-        </a>
+        {/* Brand Logo - Fixed Slot */}
+        <div className="flex w-[200px] shrink-0 items-center justify-start">
+          <a href="#hero" onClick={closeAll} className="flex items-center" aria-label="Strive home">
+            <Logo dark={true} />
+          </a>
+        </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
+        {/* Desktop Navigation Links - Centered Flex Slot */}
+        <nav className="hidden flex-1 items-center justify-center gap-8 lg:flex" aria-label="Primary navigation">
           {/* Direct link: The Idea */}
           <a
             href="#idea"
@@ -250,14 +253,14 @@ export function Header() {
           </a>
         </nav>
 
-        {/* Action Button: Alma-inspired CTA */}
-        <div className="hidden items-center gap-3 lg:flex">
-          <a
+        {/* Action Button - Isolated Fixed Slot */}
+        <div className="hidden w-[200px] shrink-0 items-center justify-end lg:flex">
+          <MainCTA
+            buttonText="Work With Strive"
             href="#cta"
-            className="inline-flex items-center justify-center rounded-lg bg-navy px-4 py-2 text-[13px] font-medium text-white shadow-xs transition-colors duration-200 hover:bg-[#0c3159] focus:outline-none focus:ring-2 focus:ring-navy/20"
-          >
-            Work With Strive
-          </a>
+            variant="dark"
+            size="sm"
+          />
         </div>
 
         {/* Mobile Menu Button */}
@@ -364,14 +367,14 @@ export function Header() {
                 Journal
               </a>
 
-              <div className="mt-4 border-t border-slate-100 pt-4">
-                <a
+              <div className="mt-4 border-t border-slate-100 pt-4 flex justify-center">
+                <MainCTA
+                  buttonText="Work With Strive"
                   href="#cta"
+                  variant="dark"
+                  size="sm"
                   onClick={closeAll}
-                  className="flex w-full items-center justify-center rounded-lg bg-navy py-3 text-center text-sm font-medium text-white shadow-xs transition-colors hover:bg-[#0c3159]"
-                >
-                  Work With Strive
-                </a>
+                />
               </div>
             </div>
           </motion.div>

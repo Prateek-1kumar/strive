@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { MainCTA } from "@/components/ui/main-cta";
 
 export function Hero() {
   return (
@@ -30,14 +30,8 @@ export function Hero() {
               Career clarity, professional growth and career psychology — designed for every stage of your working life.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#idea"
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-navy shadow-md transition-all duration-300 hover:bg-gold hover:text-navy hover:scale-[1.02]"
-              >
-                <span>Explore Strive</span>
-                <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-              </a>
+            <div className="mt-8 flex h-[54px] w-full items-center justify-center">
+              <MainCTA buttonText="Explore Strive" href="#idea" variant="white" />
             </div>
           </div>
         </div>

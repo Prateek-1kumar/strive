@@ -1,48 +1,36 @@
-import fs from "node:fs";
-import path from "node:path";
-import Image from "next/image";
-import { Timeline } from "@/components/ui/timeline";
-import { stages } from "./stages";
+import { Chapter } from "@/components/ui/chapter";
+import { ModelAxis } from "./model-axis";
+import { ModelLine } from "./model-line";
 
-const frame = "h-24 w-full rounded-sm object-cover md:h-40 lg:h-56";
-const exists = (file: string) => fs.existsSync(path.join(process.cwd(), "public/stages", file));
-
-function Photos({ slug, label }: { slug: string; label: string }) {
+function Intro() {
   return (
-    <div className="grid grid-cols-2 gap-4">
-      {[1, 2, 3, 4].map((n) => {
-        const file = `${slug}-${n}.jpg`;
-        return exists(file) ? (
-          <Image key={n} src={`/stages/${file}`} alt={label} width={800} height={600} className={`${frame} grayscale`} />
-        ) : (
-          // ponytail: placeholder until the photo exists, no fs polling or fallback chain
-          <div key={n} className={`${frame} bg-beige/70`} />
-        );
-      })}
-    </div>
+    <>
+      <Chapter numeral="II" label="The Strive Model" aside="Five layers, one continuum" dark />
+      <div className="mt-[clamp(2rem,5vh,4rem)] grid gap-8 lg:grid-cols-12 lg:items-end">
+        <h2 className="text-[clamp(2.75rem,min(6.2vw,10vh),6.25rem)] leading-[0.92] tracking-[-0.035em] text-paper lg:col-span-7">
+          One career.
+          <br />
+          <em className="text-bone">Many stages.</em>
+        </h2>
+        <p className="serif-text max-w-[36ch] text-[1.1875rem] text-paper/75 lg:col-span-4 lg:col-start-9">
+          Five layers that meet people where they are and stay for what comes next. Four follow the
+          ages of a working life; the fifth runs alongside all of them.
+        </p>
+      </div>
+    </>
   );
 }
 
 export function Model() {
-  const data = stages.map((s) => ({
-    title: s.title,
-    content: (
-      <div>
-        <p className="font-serif text-4xl leading-none text-navy md:text-5xl">{s.age}</p>
-        <p className="mb-8 mt-4 max-w-md text-lg text-charcoal/85">{s.text}</p>
-        <Photos slug={s.slug} label={s.title} />
-      </div>
-    ),
-  }));
-
   return (
-    <section id="model" className="bg-offwhite pb-16 pt-28 lg:pt-40">
-      <div className="mx-auto max-w-6xl px-6">
-        <h2 className="max-w-5xl text-[clamp(1.875rem,4.5vw,3.9375rem)] leading-[1.06] text-navy">
-          Five layers,{" "}
-          <em className="text-[color-mix(in_srgb,var(--color-gold)_72%,var(--color-navy))]">one continuum.</em>
-        </h2>
-        <Timeline data={data} />
+    <section id="model" aria-labelledby="model-title" className="on-dark relative bg-ink text-paper">
+      <span id="model-title" className="sr-only">
+        The Strive Model
+      </span>
+      <ModelAxis intro={<Intro />} />
+      <div className="shell py-24 lg:hidden">
+        <Intro />
+        <ModelLine />
       </div>
     </section>
   );

@@ -10,14 +10,14 @@
   --color-stone: #efebe3;
   --color-ink: #1f2328;
   --color-muted: #5d6066;
-  --color-line: #dcd6cb;
+  --color-line: #e4ded3;
 
   --font-serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
 
   /* Type scale (CSS px), modelled on Kinfolk, Monocle and Ness Labs. */
-  --text-display: clamp(2rem, 1.55rem + 1.4vw, 2.75rem); /* 32 → 44px */
-  --text-display--line-height: 1.12;
+  --text-display: clamp(2.5rem, 1.9rem + 1.9vw, 3.5rem); /* 40 → 56px */
+  --text-display--line-height: 1.08;
   --text-title: clamp(1.625rem, 1.35rem + 0.85vw, 2.25rem); /* 26 → 36px */
   --text-title--line-height: 1.2;
   --text-heading: clamp(1.1875rem, 1.12rem + 0.25vw, 1.375rem); /* 19 → 22px */
@@ -90,13 +90,6 @@ section[id] {
     padding-inline: clamp(1.25rem, 4vw, 3rem);
   }
 
-  /* Tracked uppercase serif, as in the Kinfolk and Monocle mastheads. */
-  .caps {
-    font-family: var(--font-serif);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
   .wordmark {
     font-family: var(--font-serif);
     font-weight: 400;
@@ -112,14 +105,21 @@ section[id] {
     color: var(--color-ink);
   }
 
-  /* Section labels in the Monocle manner: small, uppercase, serif. */
+  /* Small label above headings: quiet, warm, never shouting. */
   .eyebrow {
-    font-family: var(--font-serif);
-    font-size: 0.8125rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-muted);
+    color: var(--color-gold-text);
+  }
+
+  /* Soft raised surface used for cards and panels. */
+  .surface {
+    background: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 2px rgb(6 37 74 / 0.04), 0 12px 32px -18px rgb(6 37 74 / 0.18);
   }
 
   .text-link {

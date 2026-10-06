@@ -38,7 +38,7 @@ export const layers: Layer[] = [
     summary:
       "Informed career decisions before choosing a direction: understanding interests, strengths and the real shape of different paths.",
     questions: ["Which subjects keep doors open?", "What do these careers involve day to day?", "How do I choose a course?"],
-    image: "/images/layer-decision.jpg",
+    image: "/photos/layer-decision.jpg",
     alt: "A student sitting on stone steps outside a college building, reading notes",
   },
   {
@@ -49,8 +49,8 @@ export const layers: Layer[] = [
     summary:
       "Turning direction into education, experience, skills and opportunity, so that the first years count for more.",
     questions: ["Which experience matters most?", "How do I find a first role?", "When does a postgraduate degree make sense?"],
-    image: "/images/layer-build.jpg",
-    alt: "Hands writing in a notebook",
+    image: "/photos/layer-build.jpg",
+    alt: "A woman climbing a wide flight of stone steps",
   },
   {
     slug: "skill",
@@ -60,7 +60,7 @@ export const layers: Layer[] = [
     summary:
       "The professional skills, visibility and career assets that allow good work to be seen and a career to compound.",
     questions: ["Which skills should I invest in?", "How do I become more visible?", "What should my portfolio show?"],
-    image: "/images/layer-skill.jpg",
+    image: "/photos/layer-skill.jpg",
     alt: "A participant taking notes at a workshop table",
   },
   {
@@ -71,8 +71,8 @@ export const layers: Layer[] = [
     summary:
       "Deep dives into a single profession through workshops, webinars, resources and guidance from people who work in it.",
     questions: ["How does this field really work?", "What do employers look for?", "Where are the opportunities?"],
-    image: "/images/layer-specifics.jpg",
-    alt: "Archival photograph of a scientist working at a microscope",
+    image: "/photos/layer-specifics.jpg",
+    alt: "A hand taking a book down from a full bookshelf",
   },
   {
     slug: "transition",
@@ -82,8 +82,8 @@ export const layers: Layer[] = [
     summary:
       "Career change, reinvention and the considered question of what comes next, approached with evidence rather than impulse.",
     questions: ["Is it time for a change?", "Which of my skills transfer?", "How do I move without starting over?"],
-    image: "/images/layer-transition.jpg",
-    alt: "A woman reading by a window with a cup of coffee",
+    image: "/photos/layer-transition.jpg",
+    alt: "Two women reading a newspaper together in a doorway",
   },
 ];
 
@@ -123,8 +123,8 @@ export const specifics: Specific[] = [
     includes: ["Routes into practice and training", "Clinical, organisational and academic paths", "Applications and interviews"],
     cta: "Explore Psychology",
     href: "#specifics",
-    image: "/images/specific-psychology.jpg",
-    alt: "A man reading a book in a dim room beside a window",
+    image: "/photos/specific-psychology.jpg",
+    alt: "A woman reading by a window with a cup of coffee",
   },
   {
     id: "research",
@@ -133,7 +133,7 @@ export const specifics: Specific[] = [
     includes: ["PhD and funding decisions", "Publishing and research visibility", "Academic and industry research roles"],
     cta: "Explore Research",
     href: "#specifics",
-    image: "/images/specific-research.jpg",
+    image: "/photos/specific-research.jpg",
     alt: "Readers standing before floor-to-ceiling library shelves",
   },
   {
@@ -143,8 +143,8 @@ export const specifics: Specific[] = [
     includes: ["Communication and presentation", "Professional presence online", "Planning the next move"],
     cta: "Explore Professional Growth",
     href: "#specifics",
-    image: "/images/specific-growth.jpg",
-    alt: "A hand sketching in a notebook",
+    image: "/photos/specific-growth.jpg",
+    alt: "A hand sketching with a pen at a bright desk",
   },
 ];
 
@@ -172,7 +172,7 @@ export const articles: Article[] = [
     department: "Decisions",
     title: "Why the first career decision feels so heavy, and why it matters less than you think",
     standfirst: "Early choices are rarely as permanent as they feel. What the research says about how careers actually unfold.",
-    image: "/images/journal-walk.jpg",
+    image: "/photos/journal-walk.jpg",
     alt: "A person walking along a tree-lined street in spring",
     href: links.substack,
   },
@@ -180,16 +180,16 @@ export const articles: Article[] = [
     department: "Psychology & Research",
     title: "The quiet craft of building a research profile",
     standfirst: "Visibility in academia is less about self-promotion than about consistency. A practical look at what compounds.",
-    image: "/images/journal-laboratory.jpg",
-    alt: "Archival photograph of a scientist at a laboratory bench",
+    image: "/photos/journal-notebook.jpg",
+    alt: "Hands writing in a notebook",
     href: links.substack,
   },
   {
-    department: "Work & Careers",
-    title: "Changing careers at forty without starting again",
-    standfirst: "Transferable skills are real, but they need translating. How to describe what you already know to a new field.",
-    image: "/images/journal-letters.jpg",
-    alt: "An older woman writing at a desk beside a window",
+    department: "Career Psychology",
+    title: "What a good career conversation at school sounds like",
+    standfirst: "The questions that help a sixteen-year-old think clearly, and the well-meant ones that quietly close doors.",
+    image: "/photos/journal-classroom.jpg",
+    alt: "A student in a classroom looking back over his shoulder",
     href: links.substack,
   },
 ];

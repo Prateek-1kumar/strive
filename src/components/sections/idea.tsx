@@ -5,7 +5,7 @@ export function Idea() {
   return (
     <section id="idea" aria-labelledby="idea-title" className="py-20 lg:py-28">
       <div className="container-site">
-        <div className="grid gap-10 border-t border-navy/80 pt-10 lg:grid-cols-12 lg:gap-8">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
           <Reveal className="lg:col-span-5">
             <p className="eyebrow">The idea</p>
             <h2 id="idea-title" className="mt-4 text-title">
@@ -19,22 +19,20 @@ export function Idea() {
               conversation that ends where it began. Real careers are a series of decisions, made at different
               ages, with different information and under different pressures.
             </p>
-            <p className="prose-serif">
+            <p className="prose-serif text-ink/80">
               Strive is built around that reality. We bring the evidence of career psychology to the moments that
-              shape a working life, from choosing a first direction to deciding what comes next, and we organise
-              that guidance by stage and by profession so it is useful to the person reading it.
+              shape a working life, from choosing a first direction to deciding what comes next, and organise it by
+              stage and by profession so it is useful to the person reading it.
             </p>
           </Reveal>
         </div>
 
-        <ul className="mt-16 grid border-t border-line md:grid-cols-3">
+        <ul className="mt-16 grid gap-5 md:grid-cols-3">
           {principles.map((p, i) => (
-            <li
-              key={p.title}
-              className={`py-8 md:px-8 ${i === 0 ? "md:pl-0" : "border-t border-line md:border-l md:border-t-0"}`}
-            >
-              <Reveal delay={i * 0.05}>
-                <h3 className="text-heading">{p.title}</h3>
+            <li key={p.title}>
+              <Reveal delay={i * 0.06} className="surface h-full p-8">
+                <p className="font-serif text-[0.9375rem] text-gold-text">0{i + 1}</p>
+                <h3 className="mt-4 text-heading">{p.title}</h3>
                 <p className="mt-3 text-small text-muted">{p.text}</p>
               </Reveal>
             </li>

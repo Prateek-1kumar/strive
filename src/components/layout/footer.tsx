@@ -48,7 +48,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-6 text-[0.8125rem] text-paper/55 sm:flex-row sm:justify-between">
+        <div className="mt-16 flex flex-col gap-3 pt-6 text-[0.8125rem] text-paper/55 sm:flex-row sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Strive Careers. All rights reserved.</p>
           <p>Build your future.</p>
         </div>

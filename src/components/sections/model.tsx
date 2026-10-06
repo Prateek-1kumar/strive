@@ -1,62 +1,68 @@
-import Image from "next/image";
+import { ParallaxImage } from "@/components/ui/parallax-image";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeader } from "@/components/ui/section-header";
 import { layers } from "@/content/site";
 
 /**
- * The five layers as one connected timeline: a single rule runs across the
- * top on desktop (down the left on mobile) and each layer hangs from it.
+ * The five layers as one journey: a single soft line connects every stage
+ * (across on desktop, down the side on mobile).
  */
 export function Model() {
   return (
-    <section id="model" aria-labelledby="model-title" className="bg-stone py-20 lg:py-28">
+    <section id="model" aria-labelledby="model-title" className="bg-navy py-20 text-paper lg:py-28">
       <div className="container-site">
         <SectionHeader
+          dark
           id="model-title"
           eyebrow="The Strive Model"
           title="One career. Many stages."
           intro="Five layers form one continuum. Four follow the ages of a working life; the fifth, The Specifics, runs alongside every one of them."
         />
 
-        <ol className="relative mt-14 grid lg:mt-16 lg:grid-cols-5 lg:gap-x-10 lg:border-t lg:border-navy/40">
-          {/* Mobile: one continuous line down the left */}
-          <span aria-hidden="true" className="absolute bottom-2 left-[5px] top-2 w-px bg-navy/30 lg:hidden" />
-
-          {layers.map((l, i) => (
-            <li
-              key={l.slug}
-              className="relative pb-12 pl-9 lg:pb-0 lg:pl-0 lg:pt-8"
-            >
-              {i > 0 && (
-                <span aria-hidden="true" className="absolute -left-5 bottom-0 top-0 hidden w-px bg-line lg:block" />
-              )}
-              <span
-                aria-hidden="true"
-                className={`absolute left-0 top-1.5 h-[11px] w-[11px] rounded-full border border-navy lg:-top-[6px] ${
-                  l.slug === "specifics" ? "bg-stone" : "bg-navy"
-                }`}
-              />
-              <Reveal delay={i * 0.05}>
-                <p className="eyebrow">
-                  {l.number} &middot; {l.age}
-                </p>
-                <h3 className="mt-3 text-heading">{l.title}</h3>
-                <div className="relative mt-5 aspect-[4/3] overflow-hidden bg-paper lg:aspect-[4/5]">
-                  <Image src={l.image} alt={l.alt} fill sizes="(min-width: 1024px) 18vw, 90vw" className="object-cover" />
-                </div>
-                <p className="mt-5 text-small text-ink/85">{l.summary}</p>
-                <p className="eyebrow mt-6">Typical questions</p>
-                <ul className="mt-2 text-small text-muted">
-                  {l.questions.map((q) => (
-                    <li key={q} className="border-b border-line py-2 last:border-b-0">
-                      {q}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </li>
-          ))}
-        </ol>
+        <div className="relative mt-14 lg:mt-20">
+          <span
+            aria-hidden="true"
+            className="absolute bottom-2 left-[7px] top-2 w-px bg-gradient-to-b from-gold/70 via-paper/20 to-transparent lg:bottom-auto lg:left-0 lg:right-0 lg:top-[7px] lg:h-px lg:w-auto lg:bg-gradient-to-r"
+          />
+          <ol className="grid gap-10 lg:grid-cols-5 lg:gap-5">
+            {layers.map((l, i) => (
+              <li key={l.slug} className="relative pl-10 lg:pl-0 lg:pt-10">
+                <span
+                  aria-hidden="true"
+                  className={`absolute left-0 top-0 h-[15px] w-[15px] rounded-full ring-4 ring-navy ${
+                    l.slug === "specifics" ? "border border-gold bg-navy" : "bg-gold"
+                  }`}
+                />
+                <Reveal delay={i * 0.06} className="h-full">
+                  <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-white/[0.06]">
+                    <ParallaxImage
+                      src={l.image}
+                      alt={l.alt}
+                      sizes="(min-width: 1024px) 18vw, 90vw"
+                      strength={18}
+                      className="aspect-[4/3] lg:aspect-[4/5]"
+                    />
+                    <div className="flex flex-1 flex-col p-5">
+                      <p className="text-[0.75rem] font-medium uppercase tracking-[0.12em] text-gold">
+                        {l.number} &middot; {l.age}
+                      </p>
+                      <h3 className="mt-2 text-[1.25rem] leading-snug !text-paper">{l.title}</h3>
+                      <p className="mt-3 text-[0.9375rem] leading-relaxed text-paper/75">{l.summary}</p>
+                      <ul className="mt-5 space-y-2 text-[0.875rem] text-paper/65">
+                        {l.questions.map((q) => (
+                          <li key={q} className="flex gap-2.5">
+                            <span aria-hidden="true" className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-gold" />
+                            {q}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </article>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

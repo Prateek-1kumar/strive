@@ -32,7 +32,7 @@ export function Header() {
   return (
     <header
       className={`sticky top-0 z-50 border-b bg-paper transition-colors duration-300 ${
-        scrolled ? "border-line" : "border-transparent"
+        scrolled ? "border-transparent shadow-[0_1px_12px_rgb(6_37_74/0.06)]" : "border-transparent"
       }`}
     >
       <div className="container-site flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
@@ -41,10 +41,9 @@ export function Header() {
         </a>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center">
-            {nav.map((item, i) => (
-              <li key={item.href} className="flex items-center">
-                {i > 0 && <span aria-hidden="true" className="mx-4 h-3.5 w-px bg-line" />}
+          <ul className="flex items-center gap-8">
+            {nav.map((item) => (
+              <li key={item.href}>
                 <a
                   href={item.href}
                   className="text-[0.875rem] tracking-[0.01em] text-ink/80 transition-colors hover:text-navy"
@@ -57,7 +56,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <ButtonLink href={links.contact} className="!h-10 !px-4 !text-[0.875rem]">
+          <ButtonLink href={links.contact} className="!h-10 !px-5 !text-[0.875rem]">
             Work With Strive
           </ButtonLink>
         </div>

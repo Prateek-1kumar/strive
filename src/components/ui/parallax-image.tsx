@@ -14,7 +14,7 @@ export function ParallaxImage({
   sizes,
   priority = false,
   className = "",
-  strength = 28,
+  strength = 40,
 }: {
   src: string;
   alt: string;
@@ -30,7 +30,7 @@ export function ParallaxImage({
 
   return (
     <div ref={ref} className={`relative overflow-hidden bg-stone ${className}`}>
-      <motion.div className="absolute -inset-y-10 inset-x-0" style={reduced ? undefined : { y }}>
+      <motion.div className="absolute -inset-y-16 inset-x-0" style={reduced ? undefined : { y }}>
         <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
       </motion.div>
     </div>

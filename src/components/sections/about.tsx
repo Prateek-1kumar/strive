@@ -7,8 +7,8 @@ export function About() {
   return (
     <section id="about" aria-labelledby="about-title" className="py-20 lg:py-28">
       <div className="container-site">
-        <div className="grid overflow-hidden bg-stone lg:grid-cols-2">
-          <Reveal className="flex flex-col justify-center p-8 sm:p-12 lg:p-16">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="order-2 lg:order-1 lg:col-span-5">
             <p className="eyebrow">About Strive</p>
             <h2 id="about-title" className="mt-4 text-title">
               Built from psychology. Designed for careers.
@@ -21,7 +21,7 @@ export function About() {
               The approach is simple: understand the person and the stage they are at, give them evidence rather
               than opinion, and then the practical tools to act on it.
             </p>
-            <div className="mt-8 flex flex-col gap-6 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="surface mt-10 flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-serif text-[1.125rem] text-navy">{founder.name}</p>
                 <p className="text-small text-muted">{founder.role}</p>
@@ -31,13 +31,15 @@ export function About() {
               </ArrowLink>
             </div>
           </Reveal>
-          <ParallaxImage
-            src="/images/about-library.jpg"
-            alt="A reader at a table in a bookshop lined with tall shelves"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="aspect-[4/3] lg:aspect-auto lg:min-h-[32rem]"
-            strength={20}
-          />
+
+          <Reveal delay={0.08} className="order-1 lg:order-2 lg:col-span-7">
+            <ParallaxImage
+              src="/photos/about-bookshop.jpg"
+              alt="A reader at a desk in a bookshop lined with tall shelves"
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              className="aspect-[4/3] rounded-[2rem] shadow-[0_30px_60px_-30px_rgb(6_37_74/0.4)]"
+            />
+          </Reveal>
         </div>
       </div>
     </section>

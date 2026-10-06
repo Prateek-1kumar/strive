@@ -17,7 +17,7 @@ export function SectionHeader({
   return (
     <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
       <div className="lg:col-span-6">
-        <p className={`eyebrow ${dark ? "!text-paper/60" : ""}`}>{eyebrow}</p>
+        <p className={`eyebrow ${dark ? "!text-gold" : ""}`}>{eyebrow}</p>
         <h2 id={id} className={`mt-4 text-title ${dark ? "!text-paper" : ""}`}>
           {title}
         </h2>

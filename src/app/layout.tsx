@@ -1,32 +1,35 @@
-import type { Metadata } from "next";
-import { Bodoni_Moda, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Fraunces, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
+  display: "swap",
 });
 
-const bodoniModa = Bodoni_Moda({
-  variable: "--font-bodoni",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Strive",
-  description: "Strive — a modern career platform.",
+  title: "Strive — Build your future",
+  description:
+    "Strive is a career platform grounded in career psychology. Five layers, one continuum — from the first decision to the next transition. Launching with Psychology & Research.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f8f6f1",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${bodoniModa.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${fraunces.variable} ${schibsted.variable} antialiased`}>
+      <body>{children}</body>
     </html>
   );
 }

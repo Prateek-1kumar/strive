@@ -1,54 +1,181 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-navy: #06254a;
+  --color-ink: #06254a;
+  --color-ink-deep: #041a35;
   --color-gold: #c9a24a;
-  --color-beige: #d8cbb5;
-  --color-offwhite: #f8f6f1;
+  --color-gold-deep: #8a6a24;
+  --color-bone: #d8cbb5;
+  --color-paper: #f8f6f1;
+  --color-paper-deep: #efe9de;
   --color-charcoal: #252525;
-  --font-serif: var(--font-bodoni);
-  --font-sans: var(--font-inter);
+
+  --font-serif: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --rule: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  --rule-light: color-mix(in srgb, var(--color-paper) 16%, transparent);
+  color-scheme: light;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-body {
-  background: var(--color-offwhite);
-  color: var(--color-charcoal);
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 1.0625rem;
-  line-height: 1.65;
-}
-
-h1, h2, h3 {
-  font-family: var(--font-serif), Didot, "Bodoni MT", Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-/* Scroll-linked parallax for hero art layers (static where unsupported or reduced motion) */
-@keyframes px {
-  to { transform: translateY(var(--px)); }
-}
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .px {
-      animation: px linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 100vh;
-    }
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
-/* Anchored sections clear the pinned header */
-section[id] {
-  scroll-margin-top: 4rem;
+body {
+  background: var(--color-paper);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "kern";
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
+/* A barely-there paper grain so the page reads as printed, not flat. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+h1,
+h2,
+h3,
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 380;
+  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 0;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+em,
+.italic-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Reading-size serif for standfirsts and long-form copy. */
+.serif-text {
+  font-family: var(--font-serif);
+  font-variation-settings: "opsz" 24, "SOFT" 50, "WONK" 0;
+  letter-spacing: -0.005em;
+  line-height: 1.45;
+}
+
+/* Small capitals in the sans, used for folios and labels. */
+.folio {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.shell {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Inline link with a hairline that redraws from the left on hover. */
+.link-rule {
+  background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--rule), var(--rule));
+  background-size:
+    0% 1px,
+    100% 1px;
+  background-position:
+    0 100%,
+    0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 0.3em;
+  transition: background-size 0.6s var(--ease-editorial);
+}
+
+.link-rule:hover,
+.link-rule:focus-visible {
+  background-size:
+    100% 1px,
+    100% 1px;
+}
+
+.on-dark .link-rule {
+  background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--rule-light), var(--rule-light));
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 4px;
+}
+
+/* Anchored sections clear the header. */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+/* Drop cap for the opening paragraph of an essay. */
+.dropcap::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-weight: 340;
+  font-size: 4.6em;
+  line-height: 0.8;
+  margin: 0.06em 0.1em 0 -0.04em;
+  color: var(--color-ink);
+}
+
+/* Ruler ticks for the age axis. */
+.ticks {
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor 0,
+    currentColor 1px,
+    transparent 1px,
+    transparent calc(100% / var(--ticks))
+  );
+}
+
+@keyframes strive-draw {
+  from {
+    stroke-dashoffset: 302;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }

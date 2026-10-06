@@ -1,17 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Schibsted_Grotesk } from "next/font/google";
+import { Instrument_Sans, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz", "SOFT", "WONK"],
+  axes: ["opsz"],
   display: "swap",
 });
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
   display: "swap",
 });
@@ -19,7 +19,7 @@ const schibsted = Schibsted_Grotesk({
 export const metadata: Metadata = {
   title: "Strive — Build your future",
   description:
-    "Strive is a career platform grounded in career psychology. Five layers, one continuum — from the first decision to the next transition. Launching with Psychology & Research.",
+    "Strive is a career platform grounded in career psychology, built around the five stages of a working life. Launching with Psychology and Research.",
 };
 
 export const viewport: Viewport = {
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${schibsted.variable} antialiased`}>
+    <html lang="en" className={`${sourceSerif.variable} ${instrument.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

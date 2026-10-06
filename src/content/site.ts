@@ -1,12 +1,13 @@
-// Single source of truth for Strive's content and architecture.
-// Every section renders from this file, so a new profession, journal
-// department or link is a data change — never a redesign.
+// Single source of truth for Strive's content. Every section renders from
+// this file, so adding a profession, a journal piece or a link is a data
+// change rather than a redesign.
 
 export const links = {
   // Replace with the live URLs before launch.
   substack: "#journal",
   linkedin: "#about",
-  contact: "#work-with-strive",
+  contact: "#contact",
+  offers: "#specifics",
 };
 
 export const nav = [
@@ -18,144 +19,184 @@ export const nav = [
 
 export type Layer = {
   slug: string;
-  verb: string;
+  number: string;
   title: string;
   age: string;
-  /** Position on the age axis. `null` = runs alongside every stage. */
-  span: [number, number] | null;
-  text: string;
-  covers: string[];
-  moment: string;
+  summary: string;
+  questions: string[];
+  image: string;
+  alt: string;
 };
 
 // The five layers are a permanent part of the brand architecture.
 export const layers: Layer[] = [
   {
     slug: "decision",
-    verb: "Choose",
+    number: "01",
     title: "The Decision Layer",
-    age: "16–18",
-    span: [16, 18],
-    text: "Informed career decisions, made before a direction is chosen for you.",
-    covers: ["Interests and strengths", "Subject and course choices", "First conversations about work"],
-    moment: "choosing a direction.",
+    age: "Ages 16–18",
+    summary:
+      "Informed career decisions before choosing a direction: understanding interests, strengths and the real shape of different paths.",
+    questions: ["Which subjects keep doors open?", "What do these careers involve day to day?", "How do I choose a course?"],
+    image: "/images/layer-decision.jpg",
+    alt: "A student sitting on stone steps outside a college building, reading notes",
   },
   {
     slug: "build",
-    verb: "Build",
+    number: "02",
     title: "The Build Layer",
-    age: "18–25",
-    span: [18, 25],
-    text: "Turning direction into education, experience, skills and opportunity.",
-    covers: ["Degrees and qualifications", "Internships and first roles", "Early professional networks"],
-    moment: "building the foundations.",
+    age: "Ages 18–25",
+    summary:
+      "Turning direction into education, experience, skills and opportunity, so that the first years count for more.",
+    questions: ["Which experience matters most?", "How do I find a first role?", "When does a postgraduate degree make sense?"],
+    image: "/images/layer-build.jpg",
+    alt: "Hands writing in a notebook",
   },
   {
     slug: "skill",
-    verb: "Grow",
+    number: "03",
     title: "The Skill Layer",
-    age: "25–35",
-    span: [25, 35],
-    text: "The professional skills, visibility and assets that let a career compound.",
-    covers: ["Professional skills", "Visibility and reputation", "Portfolios and career assets"],
-    moment: "growing into your work.",
+    age: "Ages 25–35",
+    summary:
+      "The professional skills, visibility and career assets that allow good work to be seen and a career to compound.",
+    questions: ["Which skills should I invest in?", "How do I become more visible?", "What should my portfolio show?"],
+    image: "/images/layer-skill.jpg",
+    alt: "A participant taking notes at a workshop table",
   },
   {
     slug: "specifics",
-    verb: "Specialise",
+    number: "04",
     title: "The Specifics",
-    age: "Profession-specific",
-    span: null,
-    text: "Deep dives into a single profession, through workshops, webinars, resources and guidance.",
-    covers: ["Workshops", "Webinars", "Resources and guidance"],
-    moment: "going deeper in your field.",
+    age: "Any stage",
+    summary:
+      "Deep dives into a single profession through workshops, webinars, resources and guidance from people who work in it.",
+    questions: ["How does this field really work?", "What do employers look for?", "Where are the opportunities?"],
+    image: "/images/layer-specifics.jpg",
+    alt: "Archival photograph of a scientist working at a microscope",
   },
   {
     slug: "transition",
-    verb: "Transition",
+    number: "05",
     title: "The Transition Layer",
-    age: "40+",
-    span: [40, 60],
-    text: "Career change, reinvention, and the considered question of what comes next.",
-    covers: ["Career change", "Reinvention", "What comes next"],
-    moment: "starting something new.",
+    age: "Ages 40+",
+    summary:
+      "Career change, reinvention and the considered question of what comes next, approached with evidence rather than impulse.",
+    questions: ["Is it time for a change?", "Which of my skills transfer?", "How do I move without starting over?"],
+    image: "/images/layer-transition.jpg",
+    alt: "A woman reading by a window with a cup of coffee",
   },
 ];
 
-/** The age axis the model is drawn on. */
-export const axis = { from: 14, to: 60, labels: [16, 18, 25, 35, 40] };
-
-/** Horizontal position of an age on the axis, as a percentage. */
-export const agePct = (age: number) => ((age - axis.from) / (axis.to - axis.from)) * 100;
+export const principles = [
+  {
+    title: "Grounded in psychology",
+    text: "Strive is built on career psychology: the study of how people choose work, adapt to it and find meaning in it over time.",
+  },
+  {
+    title: "Organised by stage",
+    text: "The questions at seventeen are not the questions at forty. Guidance is structured around where someone actually is.",
+  },
+  {
+    title: "Specific to a profession",
+    text: "General advice only goes so far. Each Strive Specific goes deep on one field, starting with Psychology and Research.",
+  },
+];
 
 export type Specific = {
   id: string;
-  number: string;
   title: string;
-  subtitle: string;
   text: string;
-  topics: string[];
+  includes: string[];
   cta: string;
   /** Point at the vertical's own page once it exists. */
   href: string;
-  art: "psychology" | "research" | "growth";
-  tone: "navy" | "bone" | "paper";
+  image: string;
+  alt: string;
 };
 
 // Launch verticals. Append an entry to add a profession.
 export const specifics: Specific[] = [
   {
     id: "psychology",
-    number: "01",
     title: "Psychology",
-    subtitle: "Careers in the study of the mind",
-    text: "Career paths, opportunities and professional growth for people building a life in psychology.",
-    topics: ["Career paths", "Opportunities", "Growth"],
+    text: "Career paths, opportunities and professional growth for students and practitioners building a life in psychology.",
+    includes: ["Routes into practice and training", "Clinical, organisational and academic paths", "Applications and interviews"],
     cta: "Explore Psychology",
     href: "#specifics",
-    art: "psychology",
-    tone: "navy",
+    image: "/images/specific-psychology.jpg",
+    alt: "A man reading a book in a dim room beside a window",
   },
   {
     id: "research",
-    number: "02",
     title: "Research",
-    subtitle: "Careers built on evidence",
-    text: "Academia, research careers and the slow, deliberate work of building a research profile.",
-    topics: ["Academia", "Research careers", "Research profile"],
+    text: "Academia, research careers and the slow, deliberate work of building a research profile that others notice.",
+    includes: ["PhD and funding decisions", "Publishing and research visibility", "Academic and industry research roles"],
     cta: "Explore Research",
     href: "#specifics",
-    art: "research",
-    tone: "bone",
+    image: "/images/specific-research.jpg",
+    alt: "Readers standing before floor-to-ceiling library shelves",
   },
   {
     id: "growth",
-    number: "03",
     title: "Professional Growth",
-    subtitle: "For every field, at every stage",
     text: "The skills, visibility and development that carry a career forward, whatever the profession.",
-    topics: ["Skills", "Visibility", "Development"],
-    cta: "Explore Growth",
+    includes: ["Communication and presentation", "Professional presence online", "Planning the next move"],
+    cta: "Explore Professional Growth",
     href: "#specifics",
-    art: "growth",
-    tone: "paper",
+    image: "/images/specific-growth.jpg",
+    alt: "A hand sketching in a notebook",
   },
 ];
 
 export const forthcoming = ["Law", "Design", "Medicine"];
 
-export const journal = [
-  { title: "Career Psychology", text: "How people choose, adapt and find meaning in their work." },
-  { title: "Decisions", text: "Thinking clearly at the forks in the road that matter most." },
-  { title: "Growth", text: "Skills, visibility and the long game of a working life." },
-  { title: "Psychology & Research", text: "Dispatches from inside the fields Strive launches with." },
-  { title: "Work & Careers", text: "Notes on the changing shape of work, and where it is heading." },
+export const formats = [
+  { title: "Workshops", text: "Small, practical sessions on a single question, with exercises you leave having completed." },
+  { title: "Webinars", text: "Talks and conversations with people working in the field, open to everyone at that stage." },
+  { title: "Resources", text: "Guides, templates and reading lists that can be used at your own pace, between sessions." },
+  { title: "Guidance", text: "Structured one-to-one support for decisions that need more than general advice." },
 ];
+
+export type Article = {
+  department: string;
+  title: string;
+  standfirst: string;
+  image: string;
+  alt: string;
+  href: string;
+};
+
+// Placeholder editorial — replace with live Substack posts before launch.
+export const articles: Article[] = [
+  {
+    department: "Decisions",
+    title: "Why the first career decision feels so heavy, and why it matters less than you think",
+    standfirst: "Early choices are rarely as permanent as they feel. What the research says about how careers actually unfold.",
+    image: "/images/journal-walk.jpg",
+    alt: "A person walking along a tree-lined street in spring",
+    href: links.substack,
+  },
+  {
+    department: "Psychology & Research",
+    title: "The quiet craft of building a research profile",
+    standfirst: "Visibility in academia is less about self-promotion than about consistency. A practical look at what compounds.",
+    image: "/images/journal-laboratory.jpg",
+    alt: "Archival photograph of a scientist at a laboratory bench",
+    href: links.substack,
+  },
+  {
+    department: "Work & Careers",
+    title: "Changing careers at forty without starting again",
+    standfirst: "Transferable skills are real, but they need translating. How to describe what you already know to a new field.",
+    image: "/images/journal-letters.jpg",
+    alt: "An older woman writing at a desk beside a window",
+    href: links.substack,
+  },
+];
+
+export const departments = ["Career Psychology", "Decisions", "Growth", "Psychology & Research", "Work & Careers"];
 
 export const founder = {
   name: "Inaayat Khanna",
   role: "Psychologist and Founder",
-  // Drop a monochrome portrait into /public and set its path here.
-  // Until then the section renders a typographic frontispiece instead.
-  portrait: null as string | null,
 };

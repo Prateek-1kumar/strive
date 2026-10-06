@@ -1,35 +1,44 @@
-import { NorthStar } from "@/components/brand/north-star";
 import { links, nav } from "@/content/site";
 
 const columns = [
-  { title: "Strive", items: nav },
+  { title: "Explore", items: nav },
   {
-    title: "Elsewhere",
+    title: "Connect",
     items: [
-      { href: links.substack, label: "Substack" },
-      { href: links.linkedin, label: "LinkedIn" },
       { href: links.contact, label: "Work With Strive" },
+      { href: links.substack, label: "Journal on Substack" },
+      { href: links.linkedin, label: "LinkedIn" },
     ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="on-dark relative overflow-hidden bg-ink-deep text-paper">
-      <div className="shell pt-20">
-        <div className="grid gap-12 border-b border-paper/12 pb-16 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <p className="serif-text max-w-[28ch] text-[1.375rem] text-paper/85">
-              A career platform for every career, launching with <em>Psychology &amp; Research.</em>
+    <footer className="bg-navy text-paper">
+      <div className="container-site py-16 lg:py-20">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <p className="wordmark text-[1.25rem]">Strive</p>
+            <p className="mt-6 max-w-md font-serif text-[1.0625rem] leading-relaxed text-paper/75">
+              A career platform grounded in career psychology. Built for every career, launching with Psychology
+              and Research.
+            </p>
+            <p className="mt-6 text-small text-paper/60">
+              The Journal is published on Substack.{" "}
+              <a href={links.substack} className="text-link text-paper">
+                Subscribe for new essays
+              </a>
+              .
             </p>
           </div>
-          {columns.map((col) => (
-            <nav key={col.title} aria-label={col.title} className="md:col-span-3 md:first-of-type:col-start-7">
-              <p className="folio text-paper/45">{col.title}</p>
-              <ul className="mt-5 flex flex-col gap-3">
+
+          {columns.map((col, i) => (
+            <nav key={col.title} aria-label={col.title} className={`lg:col-span-2 ${i === 0 ? "lg:col-start-8" : ""}`}>
+              <p className="eyebrow !text-paper/50">{col.title}</p>
+              <ul className="mt-5 space-y-3">
                 {col.items.map((item) => (
                   <li key={item.label}>
-                    <a href={item.href} className="link-rule text-[0.9375rem] text-paper/80 hover:text-paper">
+                    <a href={item.href} className="text-small text-paper/85 transition-colors hover:text-paper">
                       {item.label}
                     </a>
                   </li>
@@ -39,18 +48,10 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-3 py-6 text-[0.8125rem] text-paper/45 md:flex-row md:justify-between">
-          <p>&copy; {new Date().getFullYear()} Strive Careers. Build your future.</p>
-          <p>Set in Fraunces &amp; Schibsted Grotesk.</p>
+        <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-6 text-[0.8125rem] text-paper/55 sm:flex-row sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} Strive Careers. All rights reserved.</p>
+          <p>Build your future.</p>
         </div>
-      </div>
-
-      {/* The wordmark, set large and cropped by the page edge like a masthead. */}
-      <div aria-hidden="true" className="relative -mb-[0.24em] select-none px-[var(--gutter)] text-center">
-        <span className="serif inline-flex items-start gap-[0.04em] text-[clamp(7rem,30vw,30rem)] leading-[0.8] tracking-[-0.05em] text-paper/[0.07]">
-          Strive
-          <NorthStar className="mt-[0.1em] h-[0.32em] w-auto text-gold/40" />
-        </span>
       </div>
     </footer>
   );

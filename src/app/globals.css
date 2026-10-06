@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #06254a;
-  --color-ink-deep: #041a35;
+  --color-navy: #06254a;
+  --color-navy-deep: #041b36;
   --color-gold: #c9a24a;
-  --color-gold-deep: #8a6a24;
-  --color-bone: #d8cbb5;
+  --color-gold-text: #8a6a24;
+  --color-beige: #d8cbb5;
   --color-paper: #f8f6f1;
-  --color-paper-deep: #efe9de;
-  --color-charcoal: #252525;
+  --color-stone: #efebe3;
+  --color-ink: #1f2328;
+  --color-muted: #5d6066;
+  --color-line: #dcd6cb;
 
-  --font-serif: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
 
-  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
-}
+  /* Type scale (CSS px), modelled on Kinfolk, Monocle and Ness Labs. */
+  --text-display: clamp(2rem, 1.55rem + 1.4vw, 2.75rem); /* 32 → 44px */
+  --text-display--line-height: 1.12;
+  --text-title: clamp(1.625rem, 1.35rem + 0.85vw, 2.25rem); /* 26 → 36px */
+  --text-title--line-height: 1.2;
+  --text-heading: clamp(1.1875rem, 1.12rem + 0.25vw, 1.375rem); /* 19 → 22px */
+  --text-heading--line-height: 1.3;
+  --text-lede: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); /* 17 → 19px */
+  --text-lede--line-height: 1.6;
+  --text-body: 1.0625rem; /* 17px */
+  --text-body--line-height: 1.65;
+  --text-small: 0.9375rem; /* 15px */
+  --text-small--line-height: 1.55;
+  --text-label: 0.75rem; /* 12px */
+  --text-label--line-height: 1.4;
 
-:root {
-  --gutter: clamp(1.25rem, 4vw, 4rem);
-  --rule: color-mix(in srgb, var(--color-ink) 14%, transparent);
-  --rule-light: color-mix(in srgb, var(--color-paper) 16%, transparent);
-  color-scheme: light;
+  --ease-out-soft: cubic-bezier(0.25, 0.6, 0.3, 1);
 }
 
 html {
@@ -36,146 +47,90 @@ html {
 
 body {
   background: var(--color-paper);
-  color: var(--color-charcoal);
+  color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-size: var(--text-body);
+  line-height: 1.65;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "ss01", "kern";
-}
-
-/* A barely-there paper grain so the page reads as printed, not flat. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-::selection {
-  background: var(--color-ink);
-  color: var(--color-paper);
 }
 
 h1,
 h2,
-h3,
-.serif {
+h3 {
   font-family: var(--font-serif);
-  font-weight: 380;
-  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 0;
-  letter-spacing: -0.025em;
-  line-height: 0.98;
+  font-weight: 400;
+  color: var(--color-navy);
+  letter-spacing: -0.012em;
   text-wrap: balance;
-}
-
-em,
-.italic-serif {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
 }
 
 p {
   text-wrap: pretty;
 }
 
-/* Reading-size serif for standfirsts and long-form copy. */
-.serif-text {
-  font-family: var(--font-serif);
-  font-variation-settings: "opsz" 24, "SOFT" 50, "WONK" 0;
-  letter-spacing: -0.005em;
-  line-height: 1.45;
-}
-
-/* Small capitals in the sans, used for folios and labels. */
-.folio {
-  font-family: var(--font-sans);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  line-height: 1.3;
-}
-
-.tabular {
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.shell {
-  width: 100%;
-  max-width: 90rem;
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
-/* Inline link with a hairline that redraws from the left on hover. */
-.link-rule {
-  background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--rule), var(--rule));
-  background-size:
-    0% 1px,
-    100% 1px;
-  background-position:
-    0 100%,
-    0 100%;
-  background-repeat: no-repeat;
-  padding-bottom: 0.3em;
-  transition: background-size 0.6s var(--ease-editorial);
-}
-
-.link-rule:hover,
-.link-rule:focus-visible {
-  background-size:
-    100% 1px,
-    100% 1px;
-}
-
-.on-dark .link-rule {
-  background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--rule-light), var(--rule-light));
+::selection {
+  background: var(--color-navy);
+  color: var(--color-paper);
 }
 
 :focus-visible {
-  outline: 1px solid var(--color-gold);
-  outline-offset: 4px;
+  outline: 2px solid var(--color-navy);
+  outline-offset: 3px;
 }
 
-/* Anchored sections clear the header. */
 section[id] {
   scroll-margin-top: 4.5rem;
 }
 
-/* Drop cap for the opening paragraph of an essay. */
-.dropcap::first-letter {
-  float: left;
-  font-family: var(--font-serif);
-  font-variation-settings: "opsz" 144, "SOFT" 100;
-  font-weight: 340;
-  font-size: 4.6em;
-  line-height: 0.8;
-  margin: 0.06em 0.1em 0 -0.04em;
-  color: var(--color-ink);
-}
-
-/* Ruler ticks for the age axis. */
-.ticks {
-  background-image: repeating-linear-gradient(
-    to right,
-    currentColor 0,
-    currentColor 1px,
-    transparent 1px,
-    transparent calc(100% / var(--ticks))
-  );
-}
-
-@keyframes strive-draw {
-  from {
-    stroke-dashoffset: 302;
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
   }
-  to {
-    stroke-dashoffset: 0;
+
+  /* Tracked uppercase serif, as in the Kinfolk and Monocle mastheads. */
+  .caps {
+    font-family: var(--font-serif);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    margin-right: -0.32em;
+  }
+
+  .prose-serif {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+
+  /* Section labels in the Monocle manner: small, uppercase, serif. */
+  .eyebrow {
+    font-family: var(--font-serif);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .text-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .text-link:hover {
+    text-decoration-color: currentColor;
   }
 }

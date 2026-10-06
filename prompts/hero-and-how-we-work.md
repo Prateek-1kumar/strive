@@ -19,7 +19,7 @@ Before writing code, inspect the committed reference files in the project root:
 - **Outperform References:** Your goal is to exceed the design bar of the reference websites. Build something clean, human, editorial, and deeply trustworthy.
 - **Modular Overhaul:** Rewrite the components section-by-section (`src/components/...` and `src/app/page.tsx`), completely replacing generic elements.
 
-## Output Format (Local Integration)
+## Output Format (Local Integration) share the files as commits
 
 GitHub is not connected to this remote session. Output **complete, unabridged code blocks** with relative file paths (e.g., `src/components/ui/hero.tsx`) so files can be seamlessly integrated locally. Do not use code truncation or `// ... rest of code` placeholders.
 

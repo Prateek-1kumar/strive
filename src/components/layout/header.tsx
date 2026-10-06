@@ -1,385 +1,144 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Logo } from "./logo";
-import { stages } from "@/components/sections/model/stages";
-import { cards } from "@/components/sections/currently/cards";
-import { MainCTA } from "@/components/ui/main-cta";
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Wordmark } from "@/components/brand/wordmark";
+import { ButtonLink } from "@/components/ui/links";
+import { links, nav } from "@/content/site";
 
-type DropdownId = "model" | "currently";
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Header() {
-  const [activeDropdown, setActiveDropdown] = useState<DropdownId | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileExpanded, setMobileExpanded] = useState<DropdownId | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const headerRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  const reduced = useReducedMotion();
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  // Close dropdown on outside click or escape
+  // Quietly step aside while reading down; return the moment the reader scrolls up.
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    setScrolled(y > 16);
+    setHidden(y > 480 && y > prev + 2);
+    if (y < prev - 2) setHidden(false);
+  });
+
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
-        setActiveDropdown(null);
-      }
-    };
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setActiveDropdown(null);
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("keydown", handleEscape);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = overflow;
+      document.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [open]);
 
-  const handleMouseEnter = (id: DropdownId) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setActiveDropdown(id);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 140);
-  };
-
-  const closeAll = () => {
-    setActiveDropdown(null);
-    setMobileMenuOpen(false);
-  };
+  const close = () => setOpen(false);
 
   return (
-    <header
-      ref={headerRef}
-      className="sticky top-0 z-50 w-full bg-white transition-shadow duration-200"
-    >
-      <div className="mx-auto flex h-14 w-full max-w-[1800px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Logo - Fixed Slot */}
-        <div className="flex w-[200px] shrink-0 items-center justify-start">
-          <a href="#hero" onClick={closeAll} className="flex items-center" aria-label="Strive home">
-            <Logo dark={true} />
-          </a>
-        </div>
-
-        {/* Desktop Navigation Links - Centered Flex Slot */}
-        <nav className="hidden flex-1 items-center justify-center gap-8 lg:flex" aria-label="Primary navigation">
-          {/* Direct link: The Idea */}
-          <a
-            href="#idea"
-            className="text-[14px] font-medium text-slate-700 transition-colors duration-150 hover:text-navy"
-          >
-            The Idea
+    <>
+      <motion.header
+        initial={false}
+        animate={{ y: hidden && !open ? "-100%" : "0%" }}
+        transition={{ duration: reduced ? 0 : 0.6, ease }}
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-500 ${
+          scrolled && !open ? "bg-paper/88 shadow-[0_1px_0_var(--rule)] backdrop-blur-md" : "bg-transparent"
+        }`}
+      >
+        <div className="shell flex h-[4.25rem] items-center justify-between gap-8">
+          <a href="#top" onClick={close} aria-label="Strive — back to the top" className="text-ink">
+            <Wordmark />
           </a>
 
-          {/* Dropdown: The Strive Model */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("model")}
-            onMouseLeave={handleMouseLeave}
-          >
-            <button
-              type="button"
-              aria-expanded={activeDropdown === "model"}
-              onClick={() => setActiveDropdown(activeDropdown === "model" ? null : "model")}
-              className={`flex items-center gap-1 text-[14px] font-medium transition-colors duration-150 outline-none ${
-                activeDropdown === "model" ? "text-navy" : "text-slate-700 hover:text-navy"
-              }`}
-            >
-              <span>The Strive Model</span>
-              <ChevronDown
-                className={`size-4 text-slate-400 transition-transform duration-200 ${
-                  activeDropdown === "model" ? "rotate-180 text-navy" : ""
-                }`}
-              />
-            </button>
+          <nav aria-label="Primary" className="hidden lg:block">
+            <ul className="flex items-center gap-9">
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    className="link-rule text-[0.875rem] text-ink/80 transition-colors duration-300 hover:text-ink"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-            {/* Dropdown Popover */}
-            <AnimatePresence>
-              {activeDropdown === "model" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }}
-                  transition={{ duration: 0.16, ease: "easeOut" }}
-                  className="absolute left-1/2 top-full z-50 w-[490px] -translate-x-1/2 pt-3"
-                >
-                  <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xl shadow-slate-900/10">
-                    <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-5 py-3">
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                        The Strive Continuum
-                      </span>
-                      <span className="text-xs text-slate-400">5 Distinct Layers</span>
-                    </div>
-
-                    <div className="p-2.5">
-                      {stages.map((stage) => (
-                        <a
-                          key={stage.slug}
-                          href="#model"
-                          onClick={closeAll}
-                          className="group flex items-start gap-3.5 rounded-lg p-2.5 transition-colors hover:bg-slate-50"
-                        >
-                          <span className="mt-0.5 inline-flex shrink-0 items-center justify-center rounded-md bg-navy/5 px-2 py-0.5 text-xs font-medium text-navy">
-                            {stage.age}
-                          </span>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm font-semibold text-slate-900 transition-colors group-hover:text-navy">
-                                {stage.title}
-                              </span>
-                              <ArrowRight className="size-3.5 -translate-x-1 text-slate-400 opacity-0 transition-all group-hover:translate-x-0 group-hover:text-navy group-hover:opacity-100" />
-                            </div>
-                            <p className="mt-0.5 line-clamp-1 text-xs text-slate-600">
-                              {stage.text}
-                            </p>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-
-                    <div className="border-t border-slate-100 bg-slate-50/90 px-5 py-3">
-                      <a
-                        href="#model"
-                        onClick={closeAll}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy transition-colors hover:text-gold"
-                      >
-                        Explore the full model &amp; methodology
-                        <ArrowRight className="size-3" />
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+          <div className="hidden lg:block">
+            <ButtonLink href={links.contact} className="h-10 text-[0.875rem]">
+              Work With Strive
+            </ButtonLink>
           </div>
 
-          {/* Dropdown: Currently */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("currently")}
-            onMouseLeave={handleMouseLeave}
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="site-menu"
+            className="relative z-10 flex items-center gap-3 py-2 text-[0.875rem] font-medium text-ink lg:hidden"
           >
-            <button
-              type="button"
-              aria-expanded={activeDropdown === "currently"}
-              onClick={() => setActiveDropdown(activeDropdown === "currently" ? null : "currently")}
-              className={`flex items-center gap-1 text-[14px] font-medium transition-colors duration-150 outline-none ${
-                activeDropdown === "currently" ? "text-navy" : "text-slate-700 hover:text-navy"
-              }`}
-            >
-              <span>Currently</span>
-              <ChevronDown
-                className={`size-4 text-slate-400 transition-transform duration-200 ${
-                  activeDropdown === "currently" ? "rotate-180 text-navy" : ""
+            <span>{open ? "Close" : "Menu"}</span>
+            <span aria-hidden="true" className="relative block h-2.5 w-6">
+              <span
+                className={`absolute left-0 top-0 h-px w-full bg-current transition-transform duration-500 ease-editorial ${
+                  open ? "translate-y-[4.5px] rotate-[32deg]" : ""
                 }`}
               />
-            </button>
-
-            {/* Dropdown Popover */}
-            <AnimatePresence>
-              {activeDropdown === "currently" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }}
-                  transition={{ duration: 0.16, ease: "easeOut" }}
-                  className="absolute left-1/2 top-full z-50 w-[420px] -translate-x-1/2 pt-3"
-                >
-                  <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xl shadow-slate-900/10">
-                    <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-5 py-3">
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                        Active Verticals
-                      </span>
-                      <span className="text-xs text-slate-400">Current Initiatives</span>
-                    </div>
-
-                    <div className="p-2.5">
-                      {cards.map((card) => (
-                        <a
-                          key={card.id}
-                          href={`#${card.id}`}
-                          onClick={closeAll}
-                          className="group flex items-start gap-3.5 rounded-lg p-2.5 transition-colors hover:bg-slate-50"
-                        >
-                          <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-navy/5 text-xs font-semibold text-navy transition-colors group-hover:bg-navy group-hover:text-white">
-                            {card.id === "psychology" ? "Ψ" : card.id === "research" ? "🔬" : "↗"}
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm font-semibold text-slate-900 transition-colors group-hover:text-navy">
-                                {card.title}
-                              </span>
-                              <ArrowRight className="size-3.5 -translate-x-1 text-slate-400 opacity-0 transition-all group-hover:translate-x-0 group-hover:text-navy group-hover:opacity-100" />
-                            </div>
-                            <p className="mt-0.5 line-clamp-1 text-xs text-slate-600">
-                              {card.text}
-                            </p>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-
-                    <div className="border-t border-slate-100 bg-slate-50/90 px-5 py-3">
-                      <a
-                        href="#currently"
-                        onClick={closeAll}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy transition-colors hover:text-gold"
-                      >
-                        Explore all active verticals
-                        <ArrowRight className="size-3" />
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Direct link: Journal */}
-          <a
-            href="#journal"
-            className="text-[14px] font-medium text-slate-700 transition-colors duration-150 hover:text-navy"
-          >
-            Journal
-          </a>
-        </nav>
-
-        {/* Action Button - Isolated Fixed Slot */}
-        <div className="hidden w-[200px] shrink-0 items-center justify-end lg:flex">
-          <MainCTA
-            buttonText="Work With Strive"
-            href="#cta"
-            variant="dark"
-            size="sm"
-          />
+              <span
+                className={`absolute bottom-0 left-0 h-px w-full bg-current transition-transform duration-500 ease-editorial ${
+                  open ? "-translate-y-[4.5px] -rotate-[32deg]" : ""
+                }`}
+              />
+            </span>
+          </button>
         </div>
+      </motion.header>
 
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileMenuOpen}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="inline-flex items-center justify-center rounded-lg p-1.5 text-slate-700 hover:bg-slate-100 lg:hidden"
-        >
-          {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {open && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden border-b border-slate-200 bg-white lg:hidden"
+            id="site-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: reduced ? 0 : 0.7, ease }}
+            className="fixed inset-0 z-40 flex flex-col bg-paper pt-[4.25rem] lg:hidden"
           >
-            <div className="flex flex-col gap-1 px-6 py-5">
-              <a
-                href="#idea"
-                onClick={closeAll}
-                className="rounded-lg px-3 py-2.5 text-[15px] font-medium text-slate-800 hover:bg-slate-50"
-              >
-                The Idea
-              </a>
-
-              {/* Mobile Accordion: Model */}
-              <div>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setMobileExpanded(mobileExpanded === "model" ? null : "model")
-                  }
-                  className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-[15px] font-medium text-slate-800 hover:bg-slate-50"
-                >
-                  <span>The Strive Model</span>
-                  <ChevronDown
-                    className={`size-4 text-slate-400 transition-transform ${
-                      mobileExpanded === "model" ? "rotate-180 text-navy" : ""
-                    }`}
-                  />
-                </button>
-                {mobileExpanded === "model" && (
-                  <div className="my-1 ml-3 flex flex-col gap-1 border-l-2 border-slate-200 pl-3">
-                    {stages.map((stage) => (
-                      <a
-                        key={stage.slug}
-                        href="#model"
-                        onClick={closeAll}
-                        className="py-1.5 text-sm text-slate-600 hover:text-navy"
-                      >
-                        <span className="font-medium text-slate-900">{stage.title}</span>
-                        <span className="ml-2 text-xs text-slate-400">({stage.age})</span>
-                      </a>
-                    ))}
-                  </div>
-                )}
+            <nav aria-label="Mobile" className="shell flex flex-1 flex-col justify-between pb-10 pt-10">
+              <ol className="border-t border-ink/15">
+                {nav.map((item, i) => (
+                  <motion.li
+                    key={item.href}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease, delay: reduced ? 0 : 0.18 + i * 0.05 }}
+                    className="border-b border-ink/15"
+                  >
+                    <a href={item.href} onClick={close} className="flex items-baseline gap-5 py-5 text-ink">
+                      <span className="folio tabular w-6 text-ink/45">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="serif text-[2.25rem]">{item.label}</span>
+                    </a>
+                  </motion.li>
+                ))}
+              </ol>
+              <div className="flex flex-col gap-6">
+                <p className="serif-text max-w-[22ch] text-[1.25rem] text-ink/70">
+                  Your next step starts <em>here.</em>
+                </p>
+                <ButtonLink href={links.contact} onClick={close} className="self-start">
+                  Work With Strive
+                </ButtonLink>
               </div>
-
-              {/* Mobile Accordion: Currently */}
-              <div>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setMobileExpanded(mobileExpanded === "currently" ? null : "currently")
-                  }
-                  className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-[15px] font-medium text-slate-800 hover:bg-slate-50"
-                >
-                  <span>Currently</span>
-                  <ChevronDown
-                    className={`size-4 text-slate-400 transition-transform ${
-                      mobileExpanded === "currently" ? "rotate-180 text-navy" : ""
-                    }`}
-                  />
-                </button>
-                {mobileExpanded === "currently" && (
-                  <div className="my-1 ml-3 flex flex-col gap-1 border-l-2 border-slate-200 pl-3">
-                    {cards.map((card) => (
-                      <a
-                        key={card.id}
-                        href={`#${card.id}`}
-                        onClick={closeAll}
-                        className="py-1.5 text-sm text-slate-600 hover:text-navy"
-                      >
-                        <span className="font-medium text-slate-900">{card.title}</span>
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <a
-                href="#journal"
-                onClick={closeAll}
-                className="rounded-lg px-3 py-2.5 text-[15px] font-medium text-slate-800 hover:bg-slate-50"
-              >
-                Journal
-              </a>
-
-              <div className="mt-4 border-t border-slate-100 pt-4 flex justify-center">
-                <MainCTA
-                  buttonText="Work With Strive"
-                  href="#cta"
-                  variant="dark"
-                  size="sm"
-                  onClick={closeAll}
-                />
-              </div>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

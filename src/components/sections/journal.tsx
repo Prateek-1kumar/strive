@@ -20,7 +20,7 @@ export function Journal() {
             <li key={d} className="mweb-pill-item">
               <a
                 href={links.substack}
-                className="block rounded-full bg-white px-4 py-2 text-[0.875rem] text-ink/80 shadow-[0_1px_2px_rgb(6_37_74/0.06)] transition-colors hover:text-navy"
+                className="block rounded-full bg-card px-4 py-2 text-[0.875rem] text-ink/80 transition-colors hover:bg-stone hover:text-navy"
               >
                 {d}
               </a>
@@ -54,7 +54,7 @@ export function Journal() {
                 <Reveal key={a.title} delay={0.05 + i * 0.05} className="mweb-carousel-item sm:w-auto sm:max-w-none sm:shrink">
                   <a
                     href={a.href}
-                    className="surface group flex h-full flex-col gap-4 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-16px_rgb(6_37_74/0.14)] sm:h-auto sm:flex-row sm:items-center sm:gap-6 sm:p-6"
+                    className="surface group flex h-full flex-col gap-4 p-5 rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 sm:h-auto sm:flex-row sm:items-center sm:gap-6 sm:p-6"
                   >
                     <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl bg-stone sm:w-36 md:w-40">
                       <Image

@@ -452,7 +452,7 @@ export function CalendlyCarousel({
                 willChange: "transform",
               }}
               className={cn(
-                "rounded-[28px] sm:rounded-[32px] bg-card text-card-foreground shadow-[0_10px_30px_rgba(95,109,119,0.08),0_4px_12px_rgba(95,109,119,0.06)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.6),0_4px_12px_rgba(0,0,0,0.4)] overflow-visible",
+                "rounded-[28px] sm:rounded-[32px] bg-card text-card-foreground border-0 shadow-none overflow-visible",
                 !isActive && "cursor-pointer"
               )}
             >

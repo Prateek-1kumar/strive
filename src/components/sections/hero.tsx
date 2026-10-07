@@ -32,7 +32,7 @@ export function Hero() {
             {facts.map((f) => (
               <div
                 key={f.value}
-                className="w-[72vw] max-w-[260px] shrink-0 snap-center rounded-2xl bg-white/70 p-4 backdrop-blur-sm sm:w-auto sm:max-w-none sm:rounded-none sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+                className="w-[72vw] max-w-[260px] shrink-0 snap-center rounded-2xl bg-card p-4 sm:w-auto sm:max-w-none sm:rounded-none sm:bg-transparent sm:p-0"
               >
                 <dt className="font-serif text-[1.125rem] text-navy">{f.value}</dt>
                 <dd className="mt-1 text-[0.875rem] leading-snug text-muted">{f.text}</dd>
@@ -56,14 +56,20 @@ export function Hero() {
           </Reveal>
 
           <Drift distance={-24} className="absolute -bottom-8 left-4 right-4 sm:left-6 sm:right-auto sm:w-80 lg:-left-10">
-            <div className="surface p-5">
+            <div className="surface p-5 sm:p-6 rounded-[1.5rem]">
               <p className="eyebrow">Now at Strive</p>
               <p className="mt-2 font-serif text-[1.125rem] leading-snug text-navy">
                 Strive Specifics for Psychology and Research careers
               </p>
-              <ArrowLink href="#specifics" className="mt-3 text-navy">
-                See what&rsquo;s included
-              </ArrowLink>
+              <div className="mt-4">
+                <a
+                  href="#specifics"
+                  className="inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2 text-[0.8125rem] font-medium text-paper transition-all hover:bg-navy-deep hover:gap-2.5"
+                >
+                  <span>See what&rsquo;s included</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
             </div>
           </Drift>
         </div>

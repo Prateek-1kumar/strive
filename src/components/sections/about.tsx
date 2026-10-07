@@ -20,7 +20,7 @@ export function About() {
               The approach is simple: understand the person and the stage they are at, give them evidence rather
               than opinion, and then the practical tools to act on it.
             </p>
-            <div className="surface mt-10 flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="surface mt-10 flex flex-col gap-4 p-6 rounded-[1.5rem] sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-serif text-[1.125rem] text-navy">{founder.name}</p>
                 <p className="text-small text-muted">{founder.role}</p>

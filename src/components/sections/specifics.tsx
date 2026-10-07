@@ -14,10 +14,10 @@ export function Specifics() {
           intro="Strive Specifics are profession-specific programmes of workshops, webinars, resources and guidance. We are starting with the fields we know from the inside."
         />
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 mweb-carousel md:mt-14 md:grid md:grid-cols-3 md:gap-6">
           {specifics.map((s, i) => (
-            <Reveal key={s.id} delay={i * 0.06} className="h-full">
-              <article id={s.id} className="surface group flex h-full flex-col p-3">
+            <Reveal key={s.id} delay={i * 0.06} className="mweb-carousel-item-lg h-full md:w-auto md:max-w-none md:shrink">
+              <article id={s.id} className="surface group flex h-full flex-col p-3 sm:p-3.5">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[0.875rem] bg-stone">
                   <Image
                     src={s.image}
@@ -47,16 +47,16 @@ export function Specifics() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-3">
-          <span className="text-small text-muted">Coming next</span>
+        <div className="mt-8 mweb-pills sm:mt-10 sm:flex-wrap">
+          <span className="mweb-pill-item text-small text-muted">Coming next</span>
           {forthcoming.map((f) => (
-            <span key={f} className="rounded-full bg-stone px-4 py-1.5 font-serif text-[0.9375rem] text-navy">
+            <span key={f} className="mweb-pill-item rounded-full bg-stone px-4 py-1.5 font-serif text-[0.9375rem] text-navy">
               Strive &times; {f}
             </span>
           ))}
         </div>
 
-        <Reveal className="mt-20 rounded-[2rem] bg-stone p-8 sm:p-12 lg:p-16">
+        <Reveal className="mt-16 sm:mt-20 rounded-[2rem] bg-stone p-6 sm:p-12 lg:p-16">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-4">
               <h3 className="text-[1.75rem] leading-tight">Four ways to learn, at any stage.</h3>
@@ -64,9 +64,12 @@ export function Specifics() {
                 Every Strive Specific combines these formats, so you can learn in the way that suits the question.
               </p>
             </div>
-            <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:col-span-7 lg:col-start-6">
+            <dl className="mt-6 flex gap-4 overflow-x-auto pb-2 pt-1 snap-x snap-mandatory -mx-2 px-2 no-scrollbar sm:mx-0 sm:px-0 sm:mt-0 sm:grid sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10 sm:overflow-visible lg:col-span-7 lg:col-start-6">
               {formats.map((f, i) => (
-                <div key={f.title}>
+                <div
+                  key={f.title}
+                  className="w-[72vw] max-w-[260px] shrink-0 snap-center rounded-2xl bg-white/70 p-5 backdrop-blur-sm sm:w-auto sm:max-w-none sm:rounded-none sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+                >
                   <p className="font-serif text-[0.9375rem] text-gold-text">0{i + 1}</p>
                   <dt className="mt-2 font-serif text-[1.25rem] text-navy">{f.title}</dt>
                   <dd className="mt-2 text-small text-muted">{f.text}</dd>

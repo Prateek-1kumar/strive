@@ -28,9 +28,12 @@ export function Hero() {
             </ButtonLink>
           </div>
 
-          <dl className="mt-14 grid gap-6 sm:grid-cols-3">
+          <dl className="mt-10 mweb-carousel sm:mt-14 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:m-0 sm:p-0">
             {facts.map((f) => (
-              <div key={f.value}>
+              <div
+                key={f.value}
+                className="w-[72vw] max-w-[260px] shrink-0 snap-center rounded-2xl bg-white/70 p-4 backdrop-blur-sm sm:w-auto sm:max-w-none sm:rounded-none sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+              >
                 <dt className="font-serif text-[1.125rem] text-navy">{f.value}</dt>
                 <dd className="mt-1 text-[0.875rem] leading-snug text-muted">{f.text}</dd>
               </div>

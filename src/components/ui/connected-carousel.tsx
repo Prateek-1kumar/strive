@@ -46,6 +46,8 @@ export function CalendlyCarousel({
   const animationFrameRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number | null>(null);
   const elapsedRef = useRef<number>(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   // State
   const [page, setPage] = useState<number>(0);
@@ -183,10 +185,31 @@ export function CalendlyCarousel({
     }
   };
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const diffX = e.changedTouches[0].clientX - touchStartX.current;
+    const diffY = e.changedTouches[0].clientY - touchStartY.current;
+
+    if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) {
+        handlePrev();
+      } else {
+        handleNext();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   const activeDimensions = {
     desktop: { width: 762, height: 513 },
     tablet: { width: 560, height: 440 },
-    mobile: { width: Math.min(340, viewportWidth - 56), height: 490 },
+    mobile: { width: Math.min(320, viewportWidth - 52), height: 450 },
   }[tier];
 
   return (
@@ -199,8 +222,10 @@ export function CalendlyCarousel({
       onKeyDown={handleKeyDown}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className={cn(
-        "relative w-full max-w-[1240px] mx-auto flex flex-col items-center select-none outline-none py-4 overflow-hidden",
+        "relative w-full max-w-[1240px] mx-auto flex flex-col items-center select-none outline-none py-4 overflow-hidden touch-pan-y",
         className
       )}
       {...props}
@@ -222,9 +247,10 @@ export function CalendlyCarousel({
             if (tier === "mobile") {
               const activeW = activeDimensions.width;
               const activeH = activeDimensions.height;
-              const gap = 16;
-              const peekW = 60;
-              const peekH = 410;
+              const gap = 10;
+              const sideMargin = Math.max(16, Math.floor((viewportWidth - activeW) / 2));
+              const peekW = Math.max(30, sideMargin - gap);
+              const peekH = Math.round(activeH * 0.88);
 
               if (offset === 0) {
                 return {
@@ -263,7 +289,7 @@ export function CalendlyCarousel({
               }
 
               return {
-                x: offset < 0 ? -activeW / 2 - 220 : activeW / 2 + 220,
+                x: offset < 0 ? -activeW / 2 - 200 : activeW / 2 + 200,
                 y: -peekH / 2,
                 width: peekW,
                 height: peekH,
@@ -430,7 +456,7 @@ export function CalendlyCarousel({
                 !isActive && "cursor-pointer"
               )}
             >
-              {offset === -1 && (
+              {offset === -1 && tier !== "mobile" && (
                 <div
                   aria-hidden="true"
                   className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-[100]"
@@ -451,7 +477,7 @@ export function CalendlyCarousel({
                 </div>
               )}
 
-              {offset === 1 && (
+              {offset === 1 && tier !== "mobile" && (
                 <div
                   aria-hidden="true"
                   className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-[100]"
@@ -562,29 +588,29 @@ export function CalendlyCarousel({
                       !isActive && "pointer-events-none"
                     )}
                   >
-                    <div className="flex-1 min-w-0 flex flex-col items-center md:items-start text-center md:text-left justify-between py-1 gap-2 sm:gap-3">
+                    <div className="flex-1 min-w-0 flex flex-col items-center md:items-start text-center md:text-left justify-between py-0.5 sm:py-1 gap-1.5 sm:gap-3">
                       <h3
                         title={item.stat}
-                        className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight text-foreground leading-tight w-full"
+                        className="font-serif text-lg sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight text-foreground leading-tight w-full"
                       >
                         {item.stat}
                       </h3>
 
-                      <div className="relative w-full min-w-0 my-auto py-1">
-                        <p className="font-serif text-sm sm:text-base md:text-lg text-foreground/85 leading-relaxed">
+                      <div className="relative w-full min-w-0 my-auto py-0.5 sm:py-1">
+                        <p className="font-serif text-[0.8125rem] sm:text-base md:text-lg text-foreground/85 leading-relaxed line-clamp-3 sm:line-clamp-none">
                           {item.quote}
                         </p>
                       </div>
 
                       <div className="flex min-w-0 w-full max-w-full overflow-hidden items-center md:items-start justify-center md:justify-start">
                         <div className="flex flex-col items-center md:items-start min-w-0 max-w-full">
-                          <span className="w-fit inline-flex items-center justify-center rounded-[4px] font-medium py-1 px-2.5 text-[11px] sm:text-xs bg-secondary text-secondary-foreground shrink-0 select-none">
+                          <span className="w-fit inline-flex items-center justify-center rounded-[4px] font-medium py-0.5 sm:py-1 px-2 sm:px-2.5 text-[10px] sm:text-xs bg-secondary text-secondary-foreground shrink-0 select-none">
                             <span className="whitespace-nowrap font-semibold">
                               {item.author}
                             </span>
                           </span>
 
-                          <div className="shrink-0 flex items-center justify-center md:justify-start px-3 h-[6px] -my-[1px] text-secondary relative z-10">
+                          <div className="shrink-0 hidden sm:flex items-center justify-center md:justify-start px-3 h-[6px] -my-[1px] text-secondary relative z-10">
                             <svg
                               className="block shrink-0 fill-current overflow-visible"
                               preserveAspectRatio="none"
@@ -596,7 +622,7 @@ export function CalendlyCarousel({
                             </svg>
                           </div>
 
-                          <span className="w-fit inline-flex items-center justify-center rounded-[4px] font-medium py-1 px-2.5 text-[10px] sm:text-xs bg-secondary text-muted-foreground max-w-full select-none">
+                          <span className="w-fit inline-flex items-center justify-center rounded-[4px] font-medium py-0.5 sm:py-1 px-2 sm:px-2.5 text-[10px] sm:text-xs bg-secondary text-muted-foreground max-w-full select-none mt-1 sm:mt-0">
                             <span
                               title={item.role}
                               className="truncate"
@@ -608,7 +634,7 @@ export function CalendlyCarousel({
                       </div>
                     </div>
 
-                    <div className="relative shrink-0 overflow-hidden rounded-[18px] sm:rounded-[22px] bg-stone w-full md:w-[clamp(180px,44%,330px)] flex-1 md:flex-initial md:h-full max-h-[220px] md:max-h-none">
+                    <div className="relative shrink-0 overflow-hidden rounded-[14px] sm:rounded-[22px] bg-stone w-full md:w-[clamp(180px,44%,330px)] flex-1 md:flex-initial md:h-full max-h-[160px] sm:max-h-[220px] md:max-h-none">
                       <Image
                         alt={item.alt || item.author}
                         src={item.selectedImage}

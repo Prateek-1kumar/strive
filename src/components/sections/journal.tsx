@@ -15,9 +15,9 @@ export function Journal() {
           intro="Essays on career psychology, decisions, growth and the changing shape of work. Published on Substack."
         />
 
-        <ul aria-label="Journal topics" className="mt-10 flex flex-wrap gap-2">
+        <ul aria-label="Journal topics" className="mt-8 mweb-pills sm:mt-10 sm:flex-wrap">
           {departments.map((d) => (
-            <li key={d}>
+            <li key={d} className="mweb-pill-item">
               <a
                 href={links.substack}
                 className="block rounded-full bg-white px-4 py-2 text-[0.875rem] text-ink/80 shadow-[0_1px_2px_rgb(6_37_74/0.06)] transition-colors hover:text-navy"
@@ -49,12 +49,12 @@ export function Journal() {
           </Reveal>
 
           <div className="flex flex-col justify-between gap-6 lg:col-span-6">
-            <div className="flex flex-col gap-5 sm:gap-6">
+            <div className="mweb-carousel sm:flex sm:flex-col sm:gap-6 sm:overflow-visible sm:m-0 sm:p-0">
               {rest.map((a, i) => (
-                <Reveal key={a.title} delay={0.05 + i * 0.05}>
+                <Reveal key={a.title} delay={0.05 + i * 0.05} className="mweb-carousel-item sm:w-auto sm:max-w-none sm:shrink">
                   <a
                     href={a.href}
-                    className="surface group flex flex-col gap-5 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-16px_rgb(6_37_74/0.14)] sm:flex-row sm:items-center sm:gap-6 sm:p-6"
+                    className="surface group flex h-full flex-col gap-4 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-16px_rgb(6_37_74/0.14)] sm:h-auto sm:flex-row sm:items-center sm:gap-6 sm:p-6"
                   >
                     <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl bg-stone sm:w-36 md:w-40">
                       <Image

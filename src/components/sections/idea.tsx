@@ -26,10 +26,10 @@ export function Idea() {
           </Reveal>
         </div>
 
-        <ul className="mt-16 grid gap-5 md:grid-cols-3">
+        <ul className="mt-12 mweb-carousel md:mt-16 md:grid md:grid-cols-3 md:gap-5">
           {principles.map((p, i) => (
-            <li key={p.title}>
-              <Reveal delay={i * 0.06} className="surface h-full p-8">
+            <li key={p.title} className="mweb-carousel-item md:w-auto md:max-w-none md:shrink">
+              <Reveal delay={i * 0.06} className="surface h-full p-6 sm:p-8">
                 <p className="font-serif text-[0.9375rem] text-gold-text">0{i + 1}</p>
                 <h3 className="mt-4 text-heading">{p.title}</h3>
                 <p className="mt-3 text-small text-muted">{p.text}</p>

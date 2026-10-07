@@ -27,16 +27,16 @@ export function Model() {
         />
 
         {/* Visual continuum roadmap */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[0.8125rem] tracking-wide text-paper/70">
-          <span className="rounded-full bg-white/10 px-3 py-1 font-medium text-paper">01 Decision (16–18)</span>
-          <span className="text-gold/80" aria-hidden="true">→</span>
-          <span className="rounded-full bg-white/10 px-3 py-1 font-medium text-paper">02 Build (18–25)</span>
-          <span className="text-gold/80" aria-hidden="true">→</span>
-          <span className="rounded-full bg-white/10 px-3 py-1 font-medium text-paper">03 Skill (25–35)</span>
-          <span className="text-gold/80" aria-hidden="true">→</span>
-          <span className="rounded-full bg-white/10 px-3 py-1 font-medium text-paper">04 Specifics</span>
-          <span className="text-gold/80" aria-hidden="true">→</span>
-          <span className="rounded-full bg-white/10 px-3 py-1 font-medium text-paper">05 Transition (40+)</span>
+        <div className="mt-8 mweb-pills sm:mt-10 sm:flex sm:flex-wrap sm:justify-center sm:gap-4 sm:overflow-visible text-[0.8125rem] tracking-wide text-paper/70">
+          <span className="mweb-pill-item rounded-full bg-white/10 px-3 py-1 font-medium text-paper">01 Decision (16–18)</span>
+          <span className="mweb-pill-item text-gold/80" aria-hidden="true">→</span>
+          <span className="mweb-pill-item rounded-full bg-white/10 px-3 py-1 font-medium text-paper">02 Build (18–25)</span>
+          <span className="mweb-pill-item text-gold/80" aria-hidden="true">→</span>
+          <span className="mweb-pill-item rounded-full bg-white/10 px-3 py-1 font-medium text-paper">03 Skill (25–35)</span>
+          <span className="mweb-pill-item text-gold/80" aria-hidden="true">→</span>
+          <span className="mweb-pill-item rounded-full bg-white/10 px-3 py-1 font-medium text-paper">04 Specifics</span>
+          <span className="mweb-pill-item text-gold/80" aria-hidden="true">→</span>
+          <span className="mweb-pill-item rounded-full bg-white/10 px-3 py-1 font-medium text-paper">05 Transition (40+)</span>
         </div>
 
         {/* Connected 3D Carousel */}

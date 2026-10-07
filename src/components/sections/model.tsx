@@ -17,7 +17,7 @@ const modelCarouselItems: CarouselItem[] = layers.map((l) => ({
 
 export function Model() {
   return (
-    <section id="model" aria-labelledby="model-title" className="bg-navy py-20 text-paper lg:py-28 overflow-hidden">
+    <section id="model" aria-labelledby="model-title" className="relative isolate z-10 bg-navy py-20 text-paper lg:py-28 overflow-hidden">
       <div className="container-site">
         <SectionHeader
           dark

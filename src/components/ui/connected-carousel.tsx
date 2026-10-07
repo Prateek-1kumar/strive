@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { HTMLAttributes, MouseEvent, KeyboardEvent } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface CarouselItem {
@@ -52,6 +53,7 @@ export function CalendlyCarousel({
   // State
   const [page, setPage] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isInView, setIsInView] = useState<boolean>(false);
   const [tier, setTier] = useState<ScreenTier>("desktop");
   const [viewportWidth, setViewportWidth] = useState<number>(1200);
 
@@ -81,15 +83,31 @@ export function CalendlyCarousel({
     };
   }, []);
 
+  // Detect when carousel is in viewport so autoplay and progress animation only run then
   useEffect(() => {
-    if (pauseOnHover && isHovered) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInView || (pauseOnHover && isHovered)) return;
 
     const interval = setInterval(() => {
       setPage((curr) => curr + 1);
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [pauseOnHover, isHovered, autoPlayInterval, page]);
+  }, [isInView, pauseOnHover, isHovered, autoPlayInterval, page]);
 
   // Handlers
   const handlePrev = useCallback(() => {
@@ -231,7 +249,7 @@ export function CalendlyCarousel({
                   width: peekW,
                   height: peekH,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 10,
                   pointerEvents: "auto" as const,
                 };
               }
@@ -243,7 +261,7 @@ export function CalendlyCarousel({
                   width: peekW,
                   height: peekH,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 10,
                   pointerEvents: "auto" as const,
                 };
               }
@@ -285,7 +303,7 @@ export function CalendlyCarousel({
                   width: sideW,
                   height: sideH,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 10,
                   pointerEvents: "auto" as const,
                 };
               }
@@ -297,7 +315,7 @@ export function CalendlyCarousel({
                   width: sideW,
                   height: sideH,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 10,
                   pointerEvents: "auto" as const,
                 };
               }
@@ -331,7 +349,7 @@ export function CalendlyCarousel({
                   width: 105,
                   height: 344,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 10,
                   pointerEvents: "auto" as const,
                 };
               case 1:
@@ -341,7 +359,7 @@ export function CalendlyCarousel({
                   width: 105,
                   height: 344,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 10,
                   pointerEvents: "auto" as const,
                 };
               case -2:
@@ -351,7 +369,7 @@ export function CalendlyCarousel({
                   width: 74,
                   height: 205,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 5,
                   pointerEvents: "auto" as const,
                 };
               case 2:
@@ -361,7 +379,7 @@ export function CalendlyCarousel({
                   width: 74,
                   height: 205,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 5,
                   pointerEvents: "auto" as const,
                 };
               case -3:
@@ -419,7 +437,7 @@ export function CalendlyCarousel({
               {offset === -1 && tier !== "mobile" && (
                 <div
                   aria-hidden="true"
-                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-[100]"
+                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-10"
                   style={{
                     width: 22,
                     height: 42,
@@ -440,7 +458,7 @@ export function CalendlyCarousel({
               {offset === 1 && tier !== "mobile" && (
                 <div
                   aria-hidden="true"
-                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-[100]"
+                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-10"
                   style={{
                     width: 22,
                     height: 42,
@@ -461,7 +479,7 @@ export function CalendlyCarousel({
               {offset === -2 && tier === "desktop" && (
                 <div
                   aria-hidden="true"
-                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-[100]"
+                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-10"
                   style={{
                     width: 18,
                     height: 28,
@@ -482,7 +500,7 @@ export function CalendlyCarousel({
               {offset === 2 && tier === "desktop" && (
                 <div
                   aria-hidden="true"
-                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-[100]"
+                  className="absolute top-0 bottom-0 flex items-center text-card pointer-events-none z-10"
                   style={{
                     width: 18,
                     height: 28,
@@ -613,46 +631,67 @@ export function CalendlyCarousel({
         })}
       </div>
 
-      <div
-        role="tablist"
-        aria-label="Use cases"
-        className="flex items-center gap-1.5 mt-5"
-      >
-        {items.map((item, idx) => {
-          const isSelected = idx === activeIndex;
+      <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6">
+        <button
+          type="button"
+          onClick={handlePrev}
+          aria-label="Previous card"
+          className="group flex h-9 w-9 items-center justify-center rounded-full border border-paper/15 text-paper/70 transition-all hover:border-paper/40 hover:bg-white/10 hover:text-paper active:scale-95"
+        >
+          <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+        </button>
 
-          return (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              data-index={idx}
-              id={`carousel-tab-${idx}`}
-              aria-controls="carousel-view-panel"
-              onClick={handleSelectTab}
-              aria-selected={isSelected}
-              aria-label={`Use case ${idx + 1}`}
-              tabIndex={isSelected ? 0 : -1}
-              className={cn(
-                "h-[8px] rounded-[3px] overflow-hidden border-0 p-0 cursor-pointer transition-[width] duration-300 ease-out outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                isSelected
-                  ? "w-[80px] bg-secondary"
-                  : "w-[8px] bg-secondary hover:bg-muted-foreground/30"
-              )}
-            >
-              {isSelected && (
-                <div
-                  key={page}
-                  className="h-full rounded-[3px] bg-gold origin-left animate-carousel-progress"
-                  style={{
-                    animationDuration: `${autoPlayInterval}ms`,
-                    animationPlayState: pauseOnHover && isHovered ? "paused" : "running",
-                  }}
-                />
-              )}
-            </button>
-          );
-        })}
+        <div
+          role="tablist"
+          aria-label="Use cases"
+          className="flex items-center gap-1.5"
+        >
+          {items.map((item, idx) => {
+            const isSelected = idx === activeIndex;
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                data-index={idx}
+                id={`carousel-tab-${idx}`}
+                aria-controls="carousel-view-panel"
+                onClick={handleSelectTab}
+                aria-selected={isSelected}
+                aria-label={`Use case ${idx + 1}`}
+                tabIndex={isSelected ? 0 : -1}
+                className={cn(
+                  "h-[8px] rounded-[3px] overflow-hidden border-0 p-0 cursor-pointer transition-[width] duration-300 ease-out outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  isSelected
+                    ? "w-[80px] bg-secondary"
+                    : "w-[8px] bg-secondary hover:bg-muted-foreground/30"
+                )}
+              >
+                {isSelected && (
+                  <div
+                    key={page}
+                    className="h-full rounded-[3px] bg-gold origin-left animate-carousel-progress"
+                    style={{
+                      animationDuration: `${autoPlayInterval}ms`,
+                      animationPlayState:
+                        isInView && !(pauseOnHover && isHovered) ? "running" : "paused",
+                    }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={handleNext}
+          aria-label="Next card"
+          className="group flex h-9 w-9 items-center justify-center rounded-full border border-paper/15 text-paper/70 transition-all hover:border-paper/40 hover:bg-white/10 hover:text-paper active:scale-95"
+        >
+          <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        </button>
       </div>
     </div>
   );

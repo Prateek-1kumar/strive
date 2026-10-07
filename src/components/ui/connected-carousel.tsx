@@ -527,7 +527,7 @@ export function CalendlyCarousel({
                     isActive && "pointer-events-none"
                   )}
                 >
-                  <div className="size-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-muted relative">
+                  <div className="size-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-stone relative">
                     <Image
                       alt={item.alt || item.author}
                       src={item.defaultImage}
@@ -608,7 +608,7 @@ export function CalendlyCarousel({
                       </div>
                     </div>
 
-                    <div className="relative shrink-0 overflow-hidden rounded-[18px] sm:rounded-[22px] bg-muted w-full md:w-[clamp(180px,44%,330px)] flex-1 md:flex-initial md:h-full max-h-[220px] md:max-h-none">
+                    <div className="relative shrink-0 overflow-hidden rounded-[18px] sm:rounded-[22px] bg-stone w-full md:w-[clamp(180px,44%,330px)] flex-1 md:flex-initial md:h-full max-h-[220px] md:max-h-none">
                       <Image
                         alt={item.alt || item.author}
                         src={item.selectedImage}

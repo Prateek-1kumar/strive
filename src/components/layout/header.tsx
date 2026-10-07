@@ -7,12 +7,60 @@ import { links, nav } from "@/content/site";
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    let lastScrollY = window.scrollY;
+
+    const updateVisibility = (currentY: number, direction?: number) => {
+      setScrolled(currentY > 20);
+
+      // Always show near top of page
+      if (currentY <= 40) {
+        setVisible(true);
+        lastScrollY = currentY;
+        return;
+      }
+
+      if (direction !== undefined) {
+        if (direction === -1) {
+          // Scrolling UP -> reveal immediately
+          setVisible(true);
+        } else if (direction === 1 && currentY > 70) {
+          // Scrolling DOWN -> hide
+          setVisible(false);
+        }
+      } else {
+        const diff = currentY - lastScrollY;
+        if (diff < -2) {
+          setVisible(true);
+        } else if (diff > 5 && currentY > 70) {
+          setVisible(false);
+        }
+      }
+
+      lastScrollY = currentY;
+    };
+
+    const onNativeScroll = () => {
+      updateVisibility(window.scrollY);
+    };
+
+    window.addEventListener("scroll", onNativeScroll, { passive: true });
+
+    // Connect directly to Lenis scroll events for 100% reliable direction detection
+    const lenis = (window as unknown as { __lenis?: { on: (event: string, cb: (e: { scroll: number; direction: number }) => void) => () => void } }).__lenis;
+    let unsubscribeLenis: (() => void) | undefined;
+    if (lenis && typeof lenis.on === "function") {
+      unsubscribeLenis = lenis.on("scroll", ({ scroll, direction }) => {
+        updateVisibility(scroll, direction);
+      });
+    }
+
+    return () => {
+      window.removeEventListener("scroll", onNativeScroll);
+      if (unsubscribeLenis) unsubscribeLenis();
+    };
   }, []);
 
   useEffect(() => {
@@ -29,10 +77,16 @@ export function Header() {
 
   const close = () => setOpen(false);
 
+  const isVisible = visible || open;
+
   return (
     <header
-      className={`sticky top-0 z-50 border-b bg-paper transition-colors duration-300 ${
-        scrolled ? "border-transparent shadow-[0_1px_12px_rgb(6_37_74/0.06)]" : "border-transparent"
+      className={`sticky top-0 z-50 transition-all duration-300 ease-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      } ${
+        scrolled
+          ? "border-b border-line/50 bg-paper/90 backdrop-blur-md shadow-[0_4px_20px_rgb(6_37_74/0.05)]"
+          : "border-b border-transparent bg-paper"
       }`}
     >
       <div className="container-site flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">

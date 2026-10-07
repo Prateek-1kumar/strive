@@ -15,20 +15,20 @@ export function SmoothScroll() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    // Apple News / editorial subtle smooth scroll curve:
-    // Fast initial response with a gentle exponential deceleration landing.
+    // Apple News / editorial smooth scroll curve with tangible momentum
     const lenis = new Lenis({
-      duration: 1.15,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.08, // Direct lerp provides a distinct, luxurious glide
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.0,
-      syncTouch: false, // Keep native 120Hz iOS/Android touch scrolling
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.2,
+      syncTouch: true,
+      syncTouchLerp: 0.08,
     });
 
     lenisRef.current = lenis;
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     let rafId: number;
     function raf(time: number) {
@@ -62,6 +62,7 @@ export function SmoothScroll() {
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
       lenisRef.current = null;
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, []);
 

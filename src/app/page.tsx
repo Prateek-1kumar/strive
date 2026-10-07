@@ -8,6 +8,8 @@ import { Journal } from "@/components/sections/journal";
 import { Model } from "@/components/sections/model";
 import { Specifics } from "@/components/sections/specifics";
 
+import { SectionEase } from "@/components/ui/section-ease";
+
 export default function Home() {
   return (
     <>
@@ -20,12 +22,22 @@ export default function Home() {
       <Header />
       <main className="w-full max-w-full overflow-x-hidden min-w-0">
         <Hero />
-        <Idea />
-        <Model />
-        <Specifics />
-        <Journal />
+        <SectionEase>
+          <Idea />
+        </SectionEase>
+        <SectionEase>
+          <Model />
+        </SectionEase>
+        <SectionEase>
+          <Specifics />
+        </SectionEase>
+        <SectionEase>
+          <Journal />
+        </SectionEase>
         {/* <About /> */}
-        <Closing />
+        <SectionEase>
+          <Closing />
+        </SectionEase>
       </main>
       <Footer />
     </>

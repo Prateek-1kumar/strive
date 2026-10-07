@@ -1,32 +1,35 @@
-import type { Metadata } from "next";
-import { Inter, Newsreader } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Instrument_Sans, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  display: "swap",
 });
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Strive",
-  description: "Strive — a modern career platform.",
+  title: "Strive — Build your future",
+  description:
+    "Strive is a career platform grounded in career psychology, built around the five stages of a working life. Launching with Psychology and Research.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f8f6f1",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${newsreader.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${sourceSerif.variable} ${instrument.variable} antialiased`}>
+      <body>{children}</body>
     </html>
   );
 }

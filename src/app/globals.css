@@ -2,53 +2,135 @@
 
 @theme inline {
   --color-navy: #06254a;
+  --color-navy-deep: #041b36;
   --color-gold: #c9a24a;
+  --color-gold-text: #8a6a24;
   --color-beige: #d8cbb5;
-  --color-offwhite: #f8f6f1;
-  --color-charcoal: #252525;
-  --font-serif: var(--font-newsreader);
-  --font-sans: var(--font-inter);
+  --color-paper: #f8f6f1;
+  --color-stone: #efebe3;
+  --color-ink: #1f2328;
+  --color-muted: #5d6066;
+  --color-line: #e4ded3;
+
+  --font-serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
+
+  /* Type scale (CSS px), modelled on Kinfolk, Monocle and Ness Labs. */
+  --text-display: clamp(2.5rem, 1.9rem + 1.9vw, 3.5rem); /* 40 → 56px */
+  --text-display--line-height: 1.08;
+  --text-title: clamp(1.625rem, 1.35rem + 0.85vw, 2.25rem); /* 26 → 36px */
+  --text-title--line-height: 1.2;
+  --text-heading: clamp(1.1875rem, 1.12rem + 0.25vw, 1.375rem); /* 19 → 22px */
+  --text-heading--line-height: 1.3;
+  --text-lede: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); /* 17 → 19px */
+  --text-lede--line-height: 1.6;
+  --text-body: 1.0625rem; /* 17px */
+  --text-body--line-height: 1.65;
+  --text-small: 0.9375rem; /* 15px */
+  --text-small--line-height: 1.55;
+  --text-label: 0.75rem; /* 12px */
+  --text-label--line-height: 1.4;
+
+  --ease-out-soft: cubic-bezier(0.25, 0.6, 0.3, 1);
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-body {
-  background: var(--color-offwhite);
-  color: var(--color-charcoal);
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 1.0625rem;
-  line-height: 1.65;
-}
-
-h1, h2, h3 {
-  font-family: var(--font-serif), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-/* Scroll-linked parallax for hero art layers (static where unsupported or reduced motion) */
-@keyframes px {
-  to { transform: translateY(var(--px)); }
-}
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .px {
-      animation: px linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 100vh;
-    }
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
-/* Anchored sections clear the pinned header */
-section[id] {
-  scroll-margin-top: 4rem;
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--color-navy);
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--color-navy);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 3px;
+}
+
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    margin-right: -0.32em;
+  }
+
+  .prose-serif {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+
+  /* Small label above headings: quiet, warm, never shouting. */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold-text);
+  }
+
+  /* Soft raised surface used for cards and panels. */
+  .surface {
+    background: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 2px rgb(6 37 74 / 0.04), 0 12px 32px -18px rgb(6 37 74 / 0.18);
+  }
+
+  .text-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .text-link:hover {
+    text-decoration-color: currentColor;
+  }
 }

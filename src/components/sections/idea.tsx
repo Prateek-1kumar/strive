@@ -1,28 +1,43 @@
+import { Reveal } from "@/components/ui/reveal";
+import { principles } from "@/content/site";
+
 export function Idea() {
   return (
-    <section id="idea" className="bg-offwhite py-28 lg:py-40">
-      <div className="mx-auto max-w-6xl px-6">
-        <h2 className="max-w-5xl text-[clamp(1.875rem,4.5vw,3.9375rem)] leading-[1.06] text-navy">
-          Careers aren&rsquo;t{" "}
-          <em className="text-[color-mix(in_srgb,var(--color-gold)_72%,var(--color-navy))]">one-size-fits-all.</em>
-          <span className="block text-navy/45">Neither are the decisions that shape them.</span>
-        </h2>
-        <div className="mt-12 grid gap-10 border-t border-gold/60 pt-10 lg:mt-16 lg:grid-cols-12">
-          <div className="lg:col-span-5 lg:col-start-8">
-            <p className="text-lg text-charcoal/85">
-              Strive is a career platform built on one belief: the right path looks different for everyone. We combine
-              career psychology and research with practical guidance — from your first decision to your next
-              transition — so you can choose with clarity and build with intent.
+    <section id="idea" aria-labelledby="idea-title" className="py-20 lg:py-28">
+      <div className="container-site">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+          <Reveal className="lg:col-span-5">
+            <p className="eyebrow">The idea</p>
+            <h2 id="idea-title" className="mt-4 text-title">
+              Careers aren&rsquo;t one-size-fits-all. Neither are the decisions that shape them.
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.05} className="space-y-5 lg:col-span-6 lg:col-start-7">
+            <p className="prose-serif">
+              Most career advice is written for no one in particular: a list of options, a personality quiz, a
+              conversation that ends where it began. Real careers are a series of decisions, made at different
+              ages, with different information and under different pressures.
             </p>
-            <a
-              href="#model"
-              className="group relative mt-8 inline-flex items-center gap-2 border-b border-navy/20 pb-1.5 text-sm font-medium text-navy after:absolute after:inset-x-0 after:-bottom-px after:h-px after:origin-left after:scale-x-0 after:bg-gold after:transition-transform after:duration-500 hover:after:scale-x-100"
-            >
-              Discover the Strive Model
-              <span className="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-            </a>
-          </div>
+            <p className="prose-serif text-ink/80">
+              Strive is built around that reality. We bring the evidence of career psychology to the moments that
+              shape a working life, from choosing a first direction to deciding what comes next, and organise it by
+              stage and by profession so it is useful to the person reading it.
+            </p>
+          </Reveal>
         </div>
+
+        <ul className="mt-16 grid gap-5 md:grid-cols-3">
+          {principles.map((p, i) => (
+            <li key={p.title}>
+              <Reveal delay={i * 0.06} className="surface h-full p-8">
+                <p className="font-serif text-[0.9375rem] text-gold-text">0{i + 1}</p>
+                <h3 className="mt-4 text-heading">{p.title}</h3>
+                <p className="mt-3 text-small text-muted">{p.text}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

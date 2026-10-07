@@ -1,35 +1,57 @@
-import { Logo } from "./logo";
+import { links, nav } from "@/content/site";
 
-const links = [
-  { href: "#hero", label: "Home" },
-  { href: "#idea", label: "The Idea" },
-  { href: "#model", label: "The Strive Model" },
-  { href: "#currently", label: "Currently" },
-  { href: "#journal", label: "Journal" },
-  { href: "#cta", label: "Work With Strive" },
+const columns = [
+  { title: "Explore", items: nav },
+  {
+    title: "Connect",
+    items: [
+      { href: links.contact, label: "Work With Strive" },
+      { href: links.substack, label: "Journal on Substack" },
+      { href: links.linkedin, label: "LinkedIn" },
+    ],
+  },
 ];
 
 export function Footer() {
   return (
-    <footer className="bg-navy text-offwhite">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between">
-          <a href="#hero" aria-label="Strive, back to top">
-            <Logo />
-          </a>
-          <nav aria-label="Footer">
-            <ul className="flex flex-wrap gap-x-7 gap-y-3 text-sm text-offwhite/65">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href} className="transition-colors duration-300 hover:text-gold">
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+    <footer className="bg-navy text-paper">
+      <div className="container-site py-16 lg:py-20">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <p className="wordmark text-[1.25rem]">Strive</p>
+            <p className="mt-6 max-w-md font-serif text-[1.0625rem] leading-relaxed text-paper/75">
+              A career platform grounded in career psychology. Built for every career, launching with Psychology
+              and Research.
+            </p>
+            <p className="mt-6 text-small text-paper/60">
+              The Journal is published on Substack.{" "}
+              <a href={links.substack} className="text-link text-paper">
+                Subscribe for new essays
+              </a>
+              .
+            </p>
+          </div>
+
+          {columns.map((col, i) => (
+            <nav key={col.title} aria-label={col.title} className={`lg:col-span-2 ${i === 0 ? "lg:col-start-8" : ""}`}>
+              <p className="eyebrow !text-paper/50">{col.title}</p>
+              <ul className="mt-5 space-y-3">
+                {col.items.map((item) => (
+                  <li key={item.label}>
+                    <a href={item.href} className="text-small text-paper/85 transition-colors hover:text-paper">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
-        <p className="pb-8 text-xs text-offwhite/40">© {new Date().getFullYear()} Strive. Build your future.</p>
+
+        <div className="mt-16 flex flex-col gap-3 pt-6 text-[0.8125rem] text-paper/55 sm:flex-row sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} Strive Careers. All rights reserved.</p>
+          <p>Build your future.</p>
+        </div>
       </div>
     </footer>
   );

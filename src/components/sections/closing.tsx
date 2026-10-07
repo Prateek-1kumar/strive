@@ -1,70 +1,53 @@
-"use client";
-import { MotionConfig, motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { ArrowLink, ButtonLink } from "@/components/ui/button";
+import { ParallaxImage } from "@/components/ui/parallax-image";
+import { Reveal } from "@/components/ui/reveal";
+import { links } from "@/content/site";
 
-// Journal + final CTA in one panel. Gentle fade-up on entering view, plus a barely-there scroll drift for finish.
-const ease = [0.22, 1, 0.36, 1] as const;
+const steps = ["Choose", "Build", "Grow", "Specialise", "Transition"];
 
 export function Closing() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const topY = useTransform(scrollYProgress, [0, 1], [14, -14]);
-  const panelY = useTransform(scrollYProgress, [0, 1], [24, -10]);
-
   return (
-    <MotionConfig reducedMotion="user">
-      <section ref={ref} className="flex flex-col overflow-hidden bg-navy pt-24 text-offwhite lg:pt-28">
-        <motion.div style={{ y: topY }} className="mx-auto w-full max-w-6xl px-6 pb-12 lg:pb-16">
-          <motion.div
-            id="journal"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.9, ease }}
-            className="grid gap-6 lg:grid-cols-12 lg:items-end"
-          >
-            <h2 className="text-[clamp(1.625rem,3.2vw,2.75rem)] leading-[1.1] lg:col-span-6">
-              Think better about <em className="text-gold">your career.</em>
-            </h2>
-            <div className="lg:col-span-4 lg:col-start-9">
-              <p className="text-offwhite/70">
-                The Strive Journal explores careers, psychology, research, work and the decisions that shape
-                professional lives.
-              </p>
-              <a
-                href="#journal"
-                className="group relative mt-5 inline-flex items-center gap-2 border-b border-offwhite/25 pb-1.5 text-sm font-medium after:absolute after:inset-x-0 after:-bottom-px after:h-px after:origin-left after:scale-x-0 after:bg-gold after:transition-transform after:duration-500 hover:after:scale-x-100"
-              >
-                Read The Journal
-                <span className="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
+    <section id="contact" aria-labelledby="contact-title" className="pb-20 lg:pb-28">
+      <div className="container-site">
+        <div className="relative overflow-hidden rounded-[2rem] text-paper">
+          <ParallaxImage
+            src="/photos/specific-research.jpg"
+            alt=""
+            sizes="100vw"
+            strength={60}
+            className="!absolute inset-0 !bg-navy"
+          />
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/85 to-navy/95" />
 
-        <motion.div style={{ y: panelY }} className="w-full lg:ml-auto lg:w-[68%]">
-          <motion.div
-            id="cta"
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 1.1, ease, delay: 0.15 }}
-            className="bg-beige px-6 py-12 text-navy lg:py-14 lg:pl-16 lg:pr-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))]"
-          >
-            <h2 className="max-w-xl text-[clamp(2rem,4.2vw,3.75rem)] leading-[1.05]">Your career is still being built.</h2>
-            <p className="mt-4 font-serif text-[clamp(1.0625rem,1.6vw,1.375rem)] italic text-navy/60">
-              Start where you are. Build from there.
+          <Reveal className="relative mx-auto max-w-2xl px-6 py-20 text-center sm:py-24 lg:py-28">
+            <p className="eyebrow !text-gold">Work With Strive</p>
+            <h2 id="contact-title" className="mt-5 text-title !text-paper">
+              Your career is still being built.
+            </h2>
+            <p className="prose-serif mx-auto mt-5 max-w-xl !text-paper/80">
+              Wherever you are in your working life, there is a next step. Tell us where you are, and we will point
+              you to the workshop, resource or conversation that fits.
             </p>
-            <a
-              href="#cta"
-              className="group mt-8 inline-flex items-center gap-3 bg-gold px-7 py-3.5 text-sm font-medium text-navy transition-colors duration-300 hover:bg-navy hover:text-offwhite"
-            >
-              Work With Strive
-              <span className="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-            </a>
-          </motion.div>
-        </motion.div>
-      </section>
-    </MotionConfig>
+
+            <ul className="mt-8 flex flex-wrap justify-center gap-2">
+              {steps.map((s) => (
+                <li key={s} className="rounded-full bg-white/10 px-4 py-1.5 text-[0.875rem] text-paper/90 backdrop-blur-sm">
+                  {s}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-7">
+              <ButtonLink href={links.contact} variant="inverse">
+                Connect With Strive
+              </ButtonLink>
+              <ArrowLink href={links.offers} className="text-paper">
+                Explore current offers
+              </ArrowLink>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
   );
 }

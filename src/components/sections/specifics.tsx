@@ -14,7 +14,7 @@ export function Specifics() {
           intro="Strive Specifics are profession-specific programmes of workshops, webinars, resources and guidance. We are starting with the fields we know from the inside."
         />
 
-        <div className="mt-10 mweb-carousel md:mt-14 md:grid md:grid-cols-3 md:gap-6">
+        <div className="mt-10 mweb-carousel min-w-0 md:mt-14 md:grid md:grid-cols-3 md:gap-6">
           {specifics.map((s, i) => (
             <Reveal key={s.id} delay={i * 0.06} className="mweb-carousel-item-lg h-full md:w-auto md:max-w-none md:shrink">
               <article id={s.id} className="surface group flex h-full flex-col p-4 sm:p-5 rounded-[1.5rem]">

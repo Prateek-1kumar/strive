@@ -7,7 +7,7 @@ import { articles, departments, links } from "@/content/site";
 export function Journal() {
   const [lead, ...rest] = articles;
   return (
-    <section id="journal" aria-labelledby="journal-title" className="bg-stone/60 py-20 lg:py-28">
+    <section id="journal" aria-labelledby="journal-title" className="bg-stone/60 py-20 lg:py-28 overflow-hidden w-full max-w-full">
       <div className="container-site">
         <SectionHeader
           id="journal-title"
@@ -28,8 +28,8 @@ export function Journal() {
           ))}
         </ul>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
-          <Reveal className="lg:col-span-6">
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14 min-w-0 max-w-full">
+          <Reveal className="min-w-0 w-full max-w-full lg:col-span-6">
             <a href={lead.href} className="group block">
               <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-stone">
                 <Image
@@ -48,15 +48,15 @@ export function Journal() {
             </a>
           </Reveal>
 
-          <div className="flex flex-col justify-between gap-6 lg:col-span-6">
-            <div className="mweb-carousel sm:flex sm:flex-col sm:gap-6 sm:overflow-visible sm:m-0 sm:p-0">
+          <div className="flex flex-col justify-between gap-6 min-w-0 w-full max-w-full lg:col-span-6">
+            <div className="mweb-carousel min-w-0 md:flex md:flex-col md:gap-6 md:overflow-visible md:m-0 md:p-0">
               {rest.map((a, i) => (
-                <Reveal key={a.title} delay={0.05 + i * 0.05} className="mweb-carousel-item sm:w-auto sm:max-w-none sm:shrink">
+                <Reveal key={a.title} delay={0.05 + i * 0.05} className="mweb-carousel-item md:w-auto md:max-w-none md:shrink">
                   <a
                     href={a.href}
-                    className="surface group flex h-full flex-col gap-4 p-5 rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 sm:h-auto sm:flex-row sm:items-center sm:gap-6 sm:p-6"
+                    className="surface group flex h-full flex-col gap-4 p-5 rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 md:h-auto md:flex-row md:items-center md:gap-6 md:p-6"
                   >
-                    <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl bg-stone sm:w-36 md:w-40">
+                    <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl bg-stone md:w-40">
                       <Image
                         src={a.image}
                         alt={a.alt}
@@ -70,7 +70,7 @@ export function Journal() {
                       <h3 className="mt-2 font-serif text-[1.1875rem] leading-snug transition-colors group-hover:text-navy">
                         {a.title}
                       </h3>
-                      <p className="mt-2 text-[0.875rem] leading-relaxed text-muted line-clamp-2 sm:line-clamp-3">
+                      <p className="mt-2 text-[0.875rem] leading-relaxed text-muted line-clamp-2 md:line-clamp-3">
                         {a.standfirst}
                       </p>
                     </div>

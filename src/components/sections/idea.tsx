@@ -20,14 +20,14 @@ export function Idea() {
   return (
     <section id="idea" aria-labelledby="idea-title" className="py-20 lg:py-28">
       <div className="container-site">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-5">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8 min-w-0 max-w-full">
+          <Reveal className="min-w-0 w-full max-w-full lg:col-span-5">
             <h2 id="idea-title" className="text-title">
               Careers aren&rsquo;t one-size-fits-all. Neither are the decisions that shape them.
             </h2>
           </Reveal>
 
-          <Reveal delay={0.05} className="space-y-5 lg:col-span-6 lg:col-start-7">
+          <Reveal delay={0.05} className="space-y-5 min-w-0 w-full max-w-full lg:col-span-6 lg:col-start-7">
             <p className="prose-serif">
               Most career advice is written for no one in particular: a list of options, a personality quiz, a
               conversation that ends where it began. Real careers are a series of decisions, made at different
@@ -41,7 +41,7 @@ export function Idea() {
           </Reveal>
         </div>
 
-        <ul className="mt-12 mweb-carousel md:mt-16 md:grid md:grid-cols-3 md:gap-5">
+        <ul className="mt-12 mweb-carousel min-w-0 md:mt-16 md:grid md:grid-cols-3 md:gap-5">
           {principles.map((p, i) => (
             <li key={p.title} className="mweb-carousel-item md:w-auto md:max-w-none md:shrink">
               <Reveal delay={i * 0.06} className="surface flex h-full flex-col justify-between p-7 sm:p-8">

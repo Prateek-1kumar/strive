@@ -18,7 +18,7 @@ export default function Home() {
         Skip to content
       </a>
       <Header />
-      <main>
+      <main className="w-full max-w-full overflow-x-hidden min-w-0">
         <Hero />
         <Idea />
         <Model />

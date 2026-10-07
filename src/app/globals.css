@@ -12,6 +12,17 @@
   --color-muted: #5d6066;
   --color-line: #e4ded3;
 
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-card: #ffffff;
+  --color-card-foreground: var(--color-ink);
+  --color-secondary: #efebe3;
+  --color-secondary-foreground: #06254a;
+  --color-muted: #efebe3;
+  --color-muted-foreground: #5d6066;
+  --color-border: #e4ded3;
+  --color-ring: #c9a24a;
+
   --font-serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
 

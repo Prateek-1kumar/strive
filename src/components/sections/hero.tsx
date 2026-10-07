@@ -14,8 +14,7 @@ export function Hero() {
     <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden pb-24 pt-10 lg:pb-32 lg:pt-16">
       <div className="container-site grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
         <Reveal className="lg:col-span-6 lg:pr-6">
-          <p className="eyebrow">A career platform &middot; Launching with Psychology &amp; Research</p>
-          <h1 id="hero-title" className="mt-5 text-display">
+          <h1 id="hero-title" className="text-display">
             Build your future.
           </h1>
           <p className="prose-serif mt-6 max-w-xl !text-[1.1875rem] text-muted">

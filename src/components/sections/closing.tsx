@@ -20,8 +20,7 @@ export function Closing() {
           <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/85 to-navy/95" />
 
           <Reveal className="relative mx-auto max-w-2xl px-6 py-20 text-center sm:py-24 lg:py-28">
-            <p className="eyebrow !text-gold">Work With Strive</p>
-            <h2 id="contact-title" className="mt-5 text-title !text-paper">
+            <h2 id="contact-title" className="text-title !text-paper">
               Your career is still being built.
             </h2>
             <p className="prose-serif mx-auto mt-5 max-w-xl !text-paper/80">

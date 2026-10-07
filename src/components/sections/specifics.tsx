@@ -10,7 +10,6 @@ export function Specifics() {
       <div className="container-site">
         <SectionHeader
           id="specifics-title"
-          eyebrow="Now at Strive"
           title="Go deeper into your profession."
           intro="Strive Specifics are profession-specific programmes of workshops, webinars, resources and guidance. We are starting with the fields we know from the inside."
         />
@@ -60,8 +59,7 @@ export function Specifics() {
         <Reveal className="mt-20 rounded-[2rem] bg-stone p-8 sm:p-12 lg:p-16">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-4">
-              <p className="eyebrow">How Strive works</p>
-              <h3 className="mt-4 text-[1.75rem] leading-tight">Four ways to learn, at any stage.</h3>
+              <h3 className="text-[1.75rem] leading-tight">Four ways to learn, at any stage.</h3>
               <p className="mt-4 text-small text-muted">
                 Every Strive Specific combines these formats, so you can learn in the way that suits the question.
               </p>

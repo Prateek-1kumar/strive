@@ -14,7 +14,6 @@ export function Model() {
         <SectionHeader
           dark
           id="model-title"
-          eyebrow="The Strive Model"
           title="One career. Many stages."
           intro="Five layers form one continuum. Four follow the ages of a working life; the fifth, The Specifics, runs alongside every one of them."
         />
@@ -43,7 +42,7 @@ export function Model() {
                       className="aspect-[4/3] lg:aspect-[4/5]"
                     />
                     <div className="flex flex-1 flex-col p-5">
-                      <p className="text-[0.75rem] font-medium uppercase tracking-[0.12em] text-gold">
+                      <p className="text-[0.75rem] font-medium uppercase tracking-[0.12em] text-paper/60">
                         {l.number} &middot; {l.age}
                       </p>
                       <h3 className="mt-2 text-[1.25rem] leading-snug !text-paper">{l.title}</h3>

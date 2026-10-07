@@ -9,8 +9,7 @@ export function About() {
       <div className="container-site">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="order-2 lg:order-1 lg:col-span-5">
-            <p className="eyebrow">About Strive</p>
-            <h2 id="about-title" className="mt-4 text-title">
+            <h2 id="about-title" className="text-title">
               Built from psychology. Designed for careers.
             </h2>
             <p className="prose-serif mt-6">

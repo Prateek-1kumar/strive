@@ -24,7 +24,7 @@ export default function Home() {
         <Model />
         <Specifics />
         <Journal />
-        <About />
+        {/* <About /> */}
         <Closing />
       </main>
       <Footer />

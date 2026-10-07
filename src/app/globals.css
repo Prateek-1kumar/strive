@@ -112,7 +112,7 @@ section[id] {
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-gold-text);
+    color: var(--color-muted);
   }
 
   /* Soft raised surface used for cards and panels. */

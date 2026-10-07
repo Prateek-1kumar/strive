@@ -7,8 +7,7 @@ export function Idea() {
       <div className="container-site">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
           <Reveal className="lg:col-span-5">
-            <p className="eyebrow">The idea</p>
-            <h2 id="idea-title" className="mt-4 text-title">
+            <h2 id="idea-title" className="text-title">
               Careers aren&rsquo;t one-size-fits-all. Neither are the decisions that shape them.
             </h2>
           </Reveal>

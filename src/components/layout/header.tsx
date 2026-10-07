@@ -10,56 +10,60 @@ export function Header() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    let lastY = window.scrollY;
+    let ticking = false;
 
-    const updateVisibility = (currentY: number, direction?: number) => {
+    const updateHeader = () => {
+      const currentY = window.scrollY;
       setScrolled(currentY > 20);
 
-      // Always show near top of page
       if (currentY <= 40) {
+        // Always show near top of page
         setVisible(true);
-        lastScrollY = currentY;
-        return;
-      }
-
-      if (direction !== undefined) {
-        if (direction === -1) {
-          // Scrolling UP -> reveal immediately
-          setVisible(true);
-        } else if (direction === 1 && currentY > 70) {
-          // Scrolling DOWN -> hide
-          setVisible(false);
-        }
       } else {
-        const diff = currentY - lastScrollY;
-        if (diff < -2) {
+        const delta = currentY - lastY;
+        // If scrolled UP by at least 3px in this frame -> reveal immediately
+        if (delta < -3) {
           setVisible(true);
-        } else if (diff > 5 && currentY > 70) {
+        }
+        // If scrolled DOWN by at least 8px and past 70px -> hide
+        else if (delta > 8 && currentY > 70) {
           setVisible(false);
         }
       }
 
-      lastScrollY = currentY;
+      lastY = currentY;
+      ticking = false;
     };
 
-    const onNativeScroll = () => {
-      updateVisibility(window.scrollY);
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
     };
 
-    window.addEventListener("scroll", onNativeScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Connect directly to Lenis scroll events for 100% reliable direction detection
-    const lenis = (window as unknown as { __lenis?: { on: (event: string, cb: (e: { scroll: number; direction: number }) => void) => () => void } }).__lenis;
-    let unsubscribeLenis: (() => void) | undefined;
-    if (lenis && typeof lenis.on === "function") {
-      unsubscribeLenis = lenis.on("scroll", ({ scroll, direction }) => {
-        updateVisibility(scroll, direction);
-      });
-    }
+    // Smoothly handle in-page anchor clicks without requiring global scroll-behavior: smooth
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest("a");
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (href && href.startsWith("#") && href.length > 1) {
+        const el = document.querySelector(href);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
 
     return () => {
-      window.removeEventListener("scroll", onNativeScroll);
-      if (unsubscribeLenis) unsubscribeLenis();
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("click", handleAnchorClick);
     };
   }, []);
 
@@ -80,15 +84,16 @@ export function Header() {
   const isVisible = visible || open;
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ease-out ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      } ${
-        scrolled
-          ? "border-b border-line/50 bg-paper/90 backdrop-blur-md shadow-[0_4px_20px_rgb(6_37_74/0.05)]"
-          : "border-b border-transparent bg-paper"
-      }`}
-    >
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 will-change-transform transition-transform duration-300 ease-out ${
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${
+          scrolled
+            ? "border-b border-line/50 bg-paper/90 backdrop-blur-md shadow-[0_4px_20px_rgb(6_37_74/0.05)]"
+            : "border-b border-transparent bg-paper"
+        }`}
+      >
       <div className="container-site flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
         <a href="#top" onClick={close} className="wordmark text-[1.125rem] text-navy lg:text-[1.25rem]" aria-label="Strive, home">
           Strive
@@ -148,6 +153,9 @@ export function Header() {
           </nav>
         </div>
       )}
-    </header>
+      </header>
+      {/* Static flow placeholder so page content is never shifted or jumped */}
+      <div className="h-16 lg:h-[4.5rem]" aria-hidden="true" />
+    </>
   );
 }

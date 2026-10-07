@@ -23,12 +23,12 @@ export function SectionEase({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0.15, y: 48, scale: 0.985 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.08, margin: "0px 0px -40px 0px" }}
+      initial={{ opacity: 0.15, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{
-        duration: 0.9,
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.6,
+        ease: [0.25, 0.6, 0.3, 1],
       }}
     >
       {children}

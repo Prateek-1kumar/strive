@@ -32,7 +32,7 @@ export function Hero() {
             {facts.map((f) => (
               <div
                 key={f.value}
-                className="w-[72vw] max-w-[260px] shrink-0 snap-center rounded-2xl bg-card p-4 sm:w-auto sm:max-w-none sm:rounded-none sm:bg-transparent sm:p-0"
+                className="w-[72vw] max-w-[260px] shrink-0 snap-start rounded-2xl bg-card p-4 sm:w-auto sm:max-w-none sm:rounded-none sm:bg-transparent sm:p-0"
               >
                 <dt className="font-serif text-[1.125rem] text-navy">{f.value}</dt>
                 <dd className="mt-1 text-[0.875rem] leading-snug text-muted">{f.text}</dd>

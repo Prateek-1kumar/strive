@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Source_Serif_4 } from "next/font/google";
-import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import "./globals.css";
 
 const sourceSerif = Source_Serif_4({
@@ -31,7 +30,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${sourceSerif.variable} ${instrument.variable} antialiased`}>
       <body>
-        <SmoothScroll />
         {children}
       </body>
     </html>

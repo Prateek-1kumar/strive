@@ -51,7 +51,6 @@ export function CalendlyCarousel({
 
   // State
   const [page, setPage] = useState<number>(0);
-  const [progress, setProgress] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [tier, setTier] = useState<ScreenTier>("desktop");
   const [viewportWidth, setViewportWidth] = useState<number>(1200);
@@ -83,54 +82,21 @@ export function CalendlyCarousel({
   }, []);
 
   useEffect(() => {
-    if (pauseOnHover && isHovered) {
-      lastTimeRef.current = null;
-      return;
-    }
+    if (pauseOnHover && isHovered) return;
 
-    const step = (timestamp: number) => {
-      if (lastTimeRef.current === null) {
-        lastTimeRef.current = timestamp;
-      }
+    const interval = setInterval(() => {
+      setPage((curr) => curr + 1);
+    }, autoPlayInterval);
 
-      const delta = timestamp - lastTimeRef.current;
-      lastTimeRef.current = timestamp;
-      elapsedRef.current += delta;
-
-      if (elapsedRef.current >= autoPlayInterval) {
-        elapsedRef.current = 0;
-        lastTimeRef.current = null;
-        setProgress(0);
-        setPage((curr) => curr + 1);
-        return;
-      }
-
-      setProgress(Math.min((elapsedRef.current / autoPlayInterval) * 100, 100));
-      animationFrameRef.current = requestAnimationFrame(step);
-    };
-
-    animationFrameRef.current = requestAnimationFrame(step);
-
-    return () => {
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      lastTimeRef.current = null;
-    };
-  }, [page, pauseOnHover, isHovered, autoPlayInterval]);
+    return () => clearInterval(interval);
+  }, [pauseOnHover, isHovered, autoPlayInterval, page]);
 
   // Handlers
   const handlePrev = useCallback(() => {
-    elapsedRef.current = 0;
-    lastTimeRef.current = null;
-    setProgress(0);
     setPage((curr) => curr - 1);
   }, []);
 
   const handleNext = useCallback(() => {
-    elapsedRef.current = 0;
-    lastTimeRef.current = null;
-    setProgress(0);
     setPage((curr) => curr + 1);
   }, []);
 
@@ -147,9 +113,6 @@ export function CalendlyCarousel({
         diff += total;
       }
 
-      elapsedRef.current = 0;
-      lastTimeRef.current = null;
-      setProgress(0);
       setPage((curr) => curr + diff);
     }
   };
@@ -161,9 +124,6 @@ export function CalendlyCarousel({
       const offset = Number.parseInt(offsetStr, 10);
 
       if (offset !== 0) {
-        elapsedRef.current = 0;
-        lastTimeRef.current = null;
-        setProgress(0);
         setPage((curr) => curr + offset);
       }
     }
@@ -195,7 +155,7 @@ export function CalendlyCarousel({
     const diffX = e.changedTouches[0].clientX - touchStartX.current;
     const diffY = e.changedTouches[0].clientY - touchStartY.current;
 
-    if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+    if (Math.abs(diffX) > 24 && Math.abs(diffX) > Math.abs(diffY) * 0.7) {
       if (diffX > 0) {
         handlePrev();
       } else {
@@ -682,10 +642,11 @@ export function CalendlyCarousel({
             >
               {isSelected && (
                 <div
-                  className="h-full rounded-[3px] bg-gold"
+                  key={page}
+                  className="h-full rounded-[3px] bg-gold origin-left animate-carousel-progress"
                   style={{
-                    transformOrigin: "0% 50%",
-                    transform: `scaleX(${progress / 100})`,
+                    animationDuration: `${autoPlayInterval}ms`,
+                    animationPlayState: pauseOnHover && isHovered ? "paused" : "running",
                   }}
                 />
               )}

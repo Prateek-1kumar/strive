@@ -20,7 +20,7 @@ export default function Home() {
         Skip to content
       </a>
       <Header />
-      <main className="w-full max-w-full overflow-x-hidden min-w-0">
+      <main className="w-full max-w-full min-w-0">
         <Hero />
         <SectionEase>
           <Idea />

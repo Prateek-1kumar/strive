@@ -53,7 +53,7 @@ export function Idea() {
                     {p.text}
                   </p>
                 </div>
-                <div className="mt-8 pt-5 border-t border-navy/10 flex flex-col gap-2.5">
+                <div className="mt-8 flex flex-col gap-2.5">
                   {principleDetails[i].map((d) => (
                     <div key={d.label} className="flex items-center justify-between text-[0.75rem] gap-2">
                       <span className="font-mono text-[0.6875rem] tracking-wider uppercase text-muted">

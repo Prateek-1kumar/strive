@@ -53,34 +53,41 @@ export function Specifics() {
           ))}
         </div>
 
-        <div className="mt-8 mweb-pills sm:mt-10 sm:flex-wrap">
-          <span className="mweb-pill-item text-small text-muted">Coming next</span>
+        <div className="mt-8 flex flex-wrap items-center gap-3 sm:mt-10 sm:gap-4">
+          <span className="text-small text-muted shrink-0 mr-1">Coming next</span>
           {forthcoming.map((f) => (
-            <span key={f} className="mweb-pill-item rounded-full bg-card px-4 py-1.5 font-serif text-[0.9375rem] text-navy">
+            <span
+              key={f}
+              className="inline-flex items-center rounded-full bg-card px-4.5 py-2 font-serif text-[0.9375rem] text-navy shrink-0 transition-transform hover:-translate-y-0.5"
+            >
               Strive &times; {f}
             </span>
           ))}
         </div>
 
-        <Reveal className="mt-16 sm:mt-20 rounded-[2rem] bg-stone p-6 sm:p-12 lg:p-16">
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-4">
-              <h3 className="text-[1.75rem] leading-tight">Four ways to learn, at any stage.</h3>
-              <p className="mt-4 text-small text-muted">
+        <Reveal className="mt-20 rounded-[2rem] bg-stone p-8 sm:p-12 lg:p-16">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-5">
+              <h3 className="font-serif text-[1.875rem] sm:text-[2.125rem] leading-[1.2] text-navy font-normal">
+                Four ways to learn, at any stage.
+              </h3>
+              <p className="prose-serif mt-4 text-[1.0625rem] text-muted leading-relaxed">
                 Every Strive Specific combines these formats, so you can learn in the way that suits the question.
               </p>
             </div>
-            <dl className="mt-6 flex gap-4 overflow-x-auto pb-2 pt-1 snap-x snap-mandatory -mx-2 px-2 no-scrollbar sm:mx-0 sm:px-0 sm:mt-0 sm:grid sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10 sm:overflow-visible lg:col-span-7 lg:col-start-6">
+
+            <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:col-span-7">
               {formats.map((f) => (
-                <div
-                  key={f.title}
-                  className="w-[72vw] max-w-[260px] shrink-0 snap-center rounded-2xl bg-card p-5 sm:w-auto sm:max-w-none sm:rounded-none sm:bg-transparent sm:p-0"
-                >
-                  <dt className="font-serif text-[1.25rem] text-navy">{f.title}</dt>
-                  <dd className="mt-2 text-small text-muted">{f.text}</dd>
+                <div key={f.title}>
+                  <h4 className="font-serif text-[1.25rem] text-navy font-normal">
+                    {f.title}
+                  </h4>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink/75">
+                    {f.text}
+                  </p>
                 </div>
               ))}
-            </dl>
+            </div>
           </div>
         </Reveal>
       </div>

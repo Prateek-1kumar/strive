@@ -7,7 +7,7 @@ const steps = ["Choose", "Build", "Grow", "Specialise", "Transition"];
 
 export function Closing() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="pb-20 lg:pb-28">
+    <section id="contact" aria-labelledby="contact-title" className="py-20 lg:py-28">
       <div className="container-site">
         <div className="relative overflow-hidden rounded-[2rem] text-paper">
           <ParallaxImage

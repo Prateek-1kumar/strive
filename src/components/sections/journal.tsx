@@ -15,12 +15,12 @@ export function Journal() {
           intro="Essays on career psychology, decisions, growth and the changing shape of work. Published on Substack."
         />
 
-        <ul aria-label="Journal topics" className="mt-8 mweb-pills sm:mt-10 sm:flex-wrap">
+        <ul aria-label="Journal topics" className="mt-8 flex flex-wrap items-center gap-2.5 sm:mt-10 sm:gap-3">
           {departments.map((d) => (
-            <li key={d} className="mweb-pill-item">
+            <li key={d} className="shrink-0">
               <a
                 href={links.substack}
-                className="block rounded-full bg-card px-4 py-2 text-[0.875rem] text-ink/80 transition-colors hover:bg-stone hover:text-navy"
+                className="inline-flex items-center rounded-full bg-card px-4.5 py-2 text-[0.875rem] font-medium text-ink/80 transition-all hover:bg-navy hover:text-paper"
               >
                 {d}
               </a>

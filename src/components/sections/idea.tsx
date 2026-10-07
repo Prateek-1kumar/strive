@@ -43,8 +43,8 @@ export function Idea() {
 
         <ul className="mt-12 mweb-carousel min-w-0 md:mt-16 md:grid md:grid-cols-3 md:gap-5">
           {principles.map((p, i) => (
-            <li key={p.title} className="mweb-carousel-item md:w-auto md:max-w-none md:shrink">
-              <Reveal delay={i * 0.06} className="surface flex h-full flex-col justify-between p-7 sm:p-8">
+            <li key={p.title} className="mweb-carousel-item flex flex-col md:w-auto md:max-w-none md:shrink">
+              <Reveal delay={i * 0.06} className="surface flex flex-1 h-full flex-col justify-between p-7 sm:p-8">
                 <div>
                   <h3 className="font-serif text-[1.3125rem] sm:text-[1.4375rem] leading-snug text-navy">
                     {p.title}

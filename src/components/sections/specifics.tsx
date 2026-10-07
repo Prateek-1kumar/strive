@@ -16,8 +16,8 @@ export function Specifics() {
 
         <div className="mt-10 mweb-carousel min-w-0 md:mt-14 md:grid md:grid-cols-3 md:gap-6">
           {specifics.map((s, i) => (
-            <Reveal key={s.id} delay={i * 0.06} className="mweb-carousel-item-lg h-full md:w-auto md:max-w-none md:shrink">
-              <article id={s.id} className="surface group flex h-full flex-col p-4 sm:p-5 rounded-[1.5rem]">
+            <Reveal key={s.id} delay={i * 0.06} className="mweb-carousel-item-lg flex flex-col h-full md:w-auto md:max-w-none md:shrink">
+              <article id={s.id} className="surface group flex flex-1 h-full flex-col p-4 sm:p-5 rounded-[1.5rem]">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.125rem] bg-stone">
                   <Image
                     src={s.image}
@@ -27,18 +27,20 @@ export function Specifics() {
                     className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
                   />
                 </div>
-                <div className="flex flex-1 flex-col pt-5 pb-1">
-                  <h3 className="font-serif text-[1.25rem] sm:text-[1.375rem] text-navy leading-snug">{s.title}</h3>
-                  <p className="mt-2.5 text-small text-ink/80 leading-relaxed">{s.text}</p>
-                  <ul className="mb-7 mt-5 space-y-2.5 text-small text-ink/85">
-                    {s.includes.map((item) => (
-                      <li key={item} className="flex gap-2.5 items-start">
-                        <span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-navy/60" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto pt-2">
+                <div className="flex flex-1 flex-col justify-between pt-5 pb-1">
+                  <div>
+                    <h3 className="font-serif text-[1.25rem] sm:text-[1.375rem] text-navy leading-snug">{s.title}</h3>
+                    <p className="mt-2.5 text-small text-ink/80 leading-relaxed">{s.text}</p>
+                    <ul className="mb-7 mt-5 space-y-2.5 text-small text-ink/85">
+                      {s.includes.map((item) => (
+                        <li key={item} className="flex gap-2.5 items-start">
+                          <span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-navy/60" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-auto pt-4">
                     <a
                       href={s.href}
                       className="inline-flex items-center gap-2 rounded-full bg-navy px-4.5 py-2.5 text-[0.8125rem] font-medium text-paper transition-all hover:bg-navy-deep group-hover:gap-2.5"

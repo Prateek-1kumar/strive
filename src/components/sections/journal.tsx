@@ -51,10 +51,10 @@ export function Journal() {
           <div className="flex flex-col justify-between gap-6 min-w-0 w-full max-w-full lg:col-span-6">
             <div className="mweb-carousel min-w-0 md:flex md:flex-col md:gap-6 md:overflow-visible md:m-0 md:p-0">
               {rest.map((a, i) => (
-                <Reveal key={a.title} delay={0.05 + i * 0.05} className="mweb-carousel-item md:w-auto md:max-w-none md:shrink">
+                <Reveal key={a.title} delay={0.05 + i * 0.05} className="mweb-carousel-item flex flex-col md:w-auto md:max-w-none md:shrink">
                   <a
                     href={a.href}
-                    className="surface group flex h-full flex-col gap-4 p-5 rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 md:h-auto md:flex-row md:items-center md:gap-6 md:p-6"
+                    className="surface group flex flex-1 h-full flex-col gap-4 p-5 rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 md:h-auto md:flex-row md:items-center md:gap-6 md:p-6"
                   >
                     <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl bg-stone md:w-40">
                       <Image

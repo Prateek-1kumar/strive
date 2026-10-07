@@ -8,7 +8,7 @@ export function SectionHeader({
   id,
   dark = false,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: ReactNode;
   intro?: ReactNode;
   id?: string;
@@ -17,8 +17,8 @@ export function SectionHeader({
   return (
     <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
       <div className="lg:col-span-6">
-        <p className={`eyebrow ${dark ? "!text-gold" : ""}`}>{eyebrow}</p>
-        <h2 id={id} className={`mt-4 text-title ${dark ? "!text-paper" : ""}`}>
+        {eyebrow && <p className={`eyebrow ${dark ? "!text-gold" : ""}`}>{eyebrow}</p>}
+        <h2 id={id} className={`${eyebrow ? "mt-4" : ""} text-title ${dark ? "!text-paper" : ""}`}>
           {title}
         </h2>
       </div>

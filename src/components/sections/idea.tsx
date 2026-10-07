@@ -1,14 +1,28 @@
 import { Reveal } from "@/components/ui/reveal";
 import { principles } from "@/content/site";
 
+const principleDetails = [
+  [
+    { label: "FOUNDATION", value: "Career psychology" },
+    { label: "EVIDENCE", value: "Research-backed" },
+  ],
+  [
+    { label: "STRUCTURE", value: "Ages 16 through 40+" },
+    { label: "FRAMEWORK", value: "5 connected layers" },
+  ],
+  [
+    { label: "APPROACH", value: "Field-by-field" },
+    { label: "STARTING WITH", value: "Psychology & Research" },
+  ],
+];
+
 export function Idea() {
   return (
     <section id="idea" aria-labelledby="idea-title" className="py-20 lg:py-28">
       <div className="container-site">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
           <Reveal className="lg:col-span-5">
-            <p className="eyebrow">The idea</p>
-            <h2 id="idea-title" className="mt-4 text-title">
+            <h2 id="idea-title" className="text-title">
               Careers aren&rsquo;t one-size-fits-all. Neither are the decisions that shape them.
             </h2>
           </Reveal>
@@ -27,13 +41,30 @@ export function Idea() {
           </Reveal>
         </div>
 
-        <ul className="mt-16 grid gap-5 md:grid-cols-3">
+        <ul className="mt-12 mweb-carousel md:mt-16 md:grid md:grid-cols-3 md:gap-5">
           {principles.map((p, i) => (
-            <li key={p.title}>
-              <Reveal delay={i * 0.06} className="surface h-full p-8">
-                <p className="font-serif text-[0.9375rem] text-gold-text">0{i + 1}</p>
-                <h3 className="mt-4 text-heading">{p.title}</h3>
-                <p className="mt-3 text-small text-muted">{p.text}</p>
+            <li key={p.title} className="mweb-carousel-item md:w-auto md:max-w-none md:shrink">
+              <Reveal delay={i * 0.06} className="surface flex h-full flex-col justify-between p-7 sm:p-8">
+                <div>
+                  <h3 className="font-serif text-[1.3125rem] sm:text-[1.4375rem] leading-snug text-navy">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3.5 text-[0.9375rem] leading-relaxed text-ink/80">
+                    {p.text}
+                  </p>
+                </div>
+                <div className="mt-8 flex flex-col gap-2.5">
+                  {principleDetails[i].map((d) => (
+                    <div key={d.label} className="flex items-center justify-between text-[0.75rem] gap-2">
+                      <span className="font-mono text-[0.6875rem] tracking-wider uppercase text-muted">
+                        {d.label}
+                      </span>
+                      <span className="font-medium text-ink/90 text-right">
+                        {d.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </Reveal>
             </li>
           ))}

@@ -9,8 +9,7 @@ export function About() {
       <div className="container-site">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="order-2 lg:order-1 lg:col-span-5">
-            <p className="eyebrow">About Strive</p>
-            <h2 id="about-title" className="mt-4 text-title">
+            <h2 id="about-title" className="text-title">
               Built from psychology. Designed for careers.
             </h2>
             <p className="prose-serif mt-6">
@@ -21,7 +20,7 @@ export function About() {
               The approach is simple: understand the person and the stage they are at, give them evidence rather
               than opinion, and then the practical tools to act on it.
             </p>
-            <div className="surface mt-10 flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="surface mt-10 flex flex-col gap-4 p-6 rounded-[1.5rem] sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-serif text-[1.125rem] text-navy">{founder.name}</p>
                 <p className="text-small text-muted">{founder.role}</p>

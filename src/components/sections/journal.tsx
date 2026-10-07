@@ -11,17 +11,16 @@ export function Journal() {
       <div className="container-site">
         <SectionHeader
           id="journal-title"
-          eyebrow="The Journal"
           title="Think better about your career."
           intro="Essays on career psychology, decisions, growth and the changing shape of work. Published on Substack."
         />
 
-        <ul aria-label="Journal topics" className="mt-10 flex flex-wrap gap-2">
+        <ul aria-label="Journal topics" className="mt-8 flex flex-wrap items-center gap-2.5 sm:mt-10 sm:gap-3">
           {departments.map((d) => (
-            <li key={d}>
+            <li key={d} className="shrink-0">
               <a
                 href={links.substack}
-                className="block rounded-full bg-white px-4 py-2 text-[0.875rem] text-ink/80 shadow-[0_1px_2px_rgb(6_37_74/0.06)] transition-colors hover:text-navy"
+                className="inline-flex items-center rounded-full bg-card px-4.5 py-2 text-[0.875rem] font-medium text-ink/80 transition-all hover:bg-navy hover:text-paper"
               >
                 {d}
               </a>
@@ -29,19 +28,19 @@ export function Journal() {
           ))}
         </ul>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-10">
-          <Reveal className="lg:col-span-7">
+        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+          <Reveal className="lg:col-span-6">
             <a href={lead.href} className="group block">
               <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-stone">
                 <Image
                   src={lead.image}
                   alt={lead.alt}
                   fill
-                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
                 />
               </div>
-              <p className="eyebrow mt-7">{lead.department}</p>
+              <p className="eyebrow mt-6">{lead.department}</p>
               <h3 className="mt-3 text-[1.75rem] leading-[1.2] transition-colors group-hover:text-navy-deep">
                 {lead.title}
               </h3>
@@ -49,30 +48,41 @@ export function Journal() {
             </a>
           </Reveal>
 
-          <div className="flex flex-col gap-8 lg:col-span-5">
-            {rest.map((a, i) => (
-              <Reveal key={a.title} delay={0.05 + i * 0.05}>
-                <a href={a.href} className="surface group flex flex-col gap-5 p-3 sm:flex-row sm:items-center">
-                  <div className="relative aspect-[4/3] shrink-0 overflow-hidden rounded-[0.875rem] bg-stone sm:w-44">
-                    <Image
-                      src={a.image}
-                      alt={a.alt}
-                      fill
-                      sizes="(min-width: 640px) 176px, 100vw"
-                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.05]"
-                    />
-                  </div>
-                  <div className="px-2 pb-3 sm:px-0 sm:pb-0 sm:pr-3">
-                    <p className="eyebrow">{a.department}</p>
-                    <h3 className="mt-2 text-[1.125rem] leading-snug">{a.title}</h3>
-                    <p className="mt-2 text-[0.875rem] leading-relaxed text-muted">{a.standfirst}</p>
-                  </div>
-                </a>
-              </Reveal>
-            ))}
-            <ArrowLink href={links.substack} className="text-navy">
-              Read the Journal on Substack
-            </ArrowLink>
+          <div className="flex flex-col justify-between gap-6 lg:col-span-6">
+            <div className="mweb-carousel sm:flex sm:flex-col sm:gap-6 sm:overflow-visible sm:m-0 sm:p-0">
+              {rest.map((a, i) => (
+                <Reveal key={a.title} delay={0.05 + i * 0.05} className="mweb-carousel-item sm:w-auto sm:max-w-none sm:shrink">
+                  <a
+                    href={a.href}
+                    className="surface group flex h-full flex-col gap-4 p-5 rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 sm:h-auto sm:flex-row sm:items-center sm:gap-6 sm:p-6"
+                  >
+                    <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl bg-stone sm:w-36 md:w-40">
+                      <Image
+                        src={a.image}
+                        alt={a.alt}
+                        fill
+                        sizes="(min-width: 640px) 160px, 100vw"
+                        className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.05]"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="eyebrow">{a.department}</p>
+                      <h3 className="mt-2 font-serif text-[1.1875rem] leading-snug transition-colors group-hover:text-navy">
+                        {a.title}
+                      </h3>
+                      <p className="mt-2 text-[0.875rem] leading-relaxed text-muted line-clamp-2 sm:line-clamp-3">
+                        {a.standfirst}
+                      </p>
+                    </div>
+                  </a>
+                </Reveal>
+              ))}
+            </div>
+            <div className="pt-2">
+              <ArrowLink href={links.substack} className="text-navy">
+                Read the Journal on Substack
+              </ArrowLink>
+            </div>
           </div>
         </div>
       </div>
